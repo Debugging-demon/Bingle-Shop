@@ -22,7 +22,7 @@ class imageController {
             let images = req.files.map((item) => {
                 const image = {}
                 image.item_id = id
-                image.url = item.filename
+                image.url = item.path
                 
                 return image
             })
