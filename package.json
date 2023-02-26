@@ -12,6 +12,7 @@
     "redis-smq": "^7.2.1",
     "redis-smq-common": "^1.0.6",
     "sequelize": "^6.28.0",
+    "socket.io": "^4.6.1",
     "util": "^0.12.5",
     "validator": "^13.7.0"
   },
