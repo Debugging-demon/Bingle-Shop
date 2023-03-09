@@ -17,5 +17,7 @@ router.post('/api/register/admin',isuserexist.validate, usercontroller.registerA
 router.post('/api/login', usercontroller.loginUser )
 //router cek profile
 router.get('/api/profile',tokenjwt.verifyToken, usercontroller.profileUser)
+//router verif
+router.get("/verify-email/:token", usercontroller.verificationUser)
 
 module.exports = router

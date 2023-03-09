@@ -4,12 +4,19 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const errorHelper = require('../respon-helper/error.helper')
 const response = require('../respon-helper/response.helper')
+const {
+    sendVerificationEmail
+} = require('../middleware/emailVerification');
+const {
+    v4: uuidv4
+} = require('uuid');
 
 class userController {
 
     async registerUser (req, res, next) {
 
         try {
+            const verificationToken = uuidv4();
             //membuat user baru 
             const createUsers = await User.create({
                 fullname: req.body.fullname,
@@ -17,12 +24,15 @@ class userController {
                 phone: req.body.phone,
                 email: req.body.email,
                 password: bcrypt.hashSync(req.body.password, 8),
-                role: 'user'
+                role: 'user',
+                is_verified: false,
+                verification_token: verificationToken
             })
                 //memberikan respon bila gagal membuat user baru
                 if(!createUsers){
                     throw new errorHelper(400, 'cannot create user')
                 }
+                await sendVerificationEmail(createUsers);
                 return new response(res, 201, 'create user successfully')
         }
        catch(error) {
@@ -33,6 +43,7 @@ class userController {
     async registerSeller (req, res, next) {
 
         try {
+            const verificationToken = uuidv4();
             //membuat user baru 
             const createUsers = await User.create({
                 fullname: req.body.fullname,
@@ -40,12 +51,15 @@ class userController {
                 phone: req.body.phone,
                 email: req.body.email,
                 password: bcrypt.hashSync(req.body.password, 8),
-                role: 'seller'
+                role: 'seller',
+                is_verified: false,
+                verification_token: verificationToken
             })
                 //memberikan respon bila gagal membuat user baru
                 if(!createUsers){
                     throw new errorHelper(400, 'cannot create user')
                 }
+                await sendVerificationEmail(createUsers);
                 return new response(res, 201, 'create user successfully')
         }
        catch(error) {
@@ -56,6 +70,7 @@ class userController {
     async registerAdmin (req, res, next) {
 
         try {
+            const verificationToken = uuidv4();
             //membuat user baru 
             const createUsers = await User.create({
                 fullname: req.body.fullname,
@@ -63,21 +78,51 @@ class userController {
                 phone: req.body.phone,
                 email: req.body.email,
                 password: bcrypt.hashSync(req.body.password, 8),
-                role: 'admin'
+                role: 'admin',
+                is_verified: false,
+                verification_token: verificationToken
             })
                 //memberikan respon bila gagal membuat user baru
                 if(!createUsers){
                     throw new errorHelper(400, 'cannot create user')
                 }
+                await sendVerificationEmail(createUsers);
                 return new response(res, 201, 'create user successfully')
         }
        catch(error) {
             next(error)
         }  
     }
-    
+    async verificationUser(req, res, next) {
+        const {
+            token
+        } = req.params;
+        try {
+            // Mencari user berdasarkan email, yg telah diberi verif code.
+            const users = await User.findOne({
+                where: {
+                    verification_token: token
+                }
+            });
+            if (!users) {
+                return res.status(404).json({
+                    message: 'Invalid token'
+                });
+            }
+            users.is_verified = true;
+            users.verification_token = null;
+            await users.save();
+            return res.status(200).json({
+                message: 'Email berhasil terverifikasi.'
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                message: 'Server error'
+            });
+        }
+    }
     async loginUser (req, res, next) {
-        
         try {
             const findUser = await User.findOne({
                 where:{
@@ -92,6 +137,9 @@ class userController {
             
             if(!passwordIsValid) {
                 throw new errorHelper(400, 'Invalid password')
+            }
+            if(!findUser.is_verified){
+                throw new errorHelper(400, 'Email is not verified')
             }
             //membuat token dan akan mengirimkannya kedalam respom
             let token = jwt.sign({ id: findUser.id, role: findUser.role}, config.secret, {
