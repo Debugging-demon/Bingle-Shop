@@ -16,7 +16,7 @@ const transport = nodemailer.createTransport({
 
 async function sendVerificationEmail(users) {
     const token = users.verification_token;
-    const url = `http://localhost:8080/auth/verify-email/${token}`;
+    const url = `http://localhost:8080/v1/verify-email/${token}`;
     const mailOptions = {
         from: "'Debugging Demon'<no-reply@gmail.com>",
         to: users.email,
