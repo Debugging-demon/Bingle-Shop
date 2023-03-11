@@ -16,7 +16,7 @@ const imageFilter = (req, file, cb) => {
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: "images",
+        folder: "BingleShop",
         format: async (req, file) => {
             "jpg", "png"
         }, // supports promises as well
@@ -46,7 +46,12 @@ const uploadImage =  multer({
 
 let uploadFile = util.promisify(uploadImage)
 
+const deleteImageCloudinary = async (payload) => {
+    return cloudinary.uploader.destroy(payload)
+}
+
 module.exports = {
     uploadFile,
     __basedir,
+    deleteImageCloudinary,
 }
