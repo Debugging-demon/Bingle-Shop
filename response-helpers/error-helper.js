@@ -2,7 +2,7 @@ const response = require('./response')
 
 const ok = (res, message, data = []) => {
   const type = 'success'
-  return res.json(response(message, data, type, false))
+  return res.status(200).json(response(message, data, type, false))
 }
 
 const created = (res, message, data = []) => {
