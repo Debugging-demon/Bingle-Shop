@@ -15,7 +15,7 @@ class orderController {
             
             //create order
             const findItemCart = await itemCartQueries.findItemCart(findCart)
-            if(itemCart.length == 0) { return responseHendler.notFound(res, message('item_cart').notFoundResource)}
+            if(findItemCart.length == 0) { return responseHendler.notFound(res, message('item_cart').notFoundResource)}
 
             for (const item of findItemCart) {
                 const findItem = await itemQueries.findByPayload(item.item_id)
@@ -32,7 +32,7 @@ class orderController {
 
             let cartPrice = {}
             let totalPrice = 0;
-            itemCart.forEach((item) => {
+            findItemCart.forEach((item) => {
                 cartPrice[item.id] = item.total_price
                 totalPrice = totalPrice + item.total_price
             })

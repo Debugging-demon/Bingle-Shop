@@ -1,6 +1,7 @@
 const { itemQueries, cartQueries, itemCartQueries } = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
+const { cartDecorator, cartDecoratorArray } = require('../decorators/carts-decorator')
 
 
 class cartController {
@@ -58,9 +59,10 @@ class cartController {
 
             const auth = req.userId
             const findCart = await cartQueries.findAllCart(auth)
-            if (findCart.length == 0) { return responseHendler.notFound(res, message('cart').notFoundResource)}
+            if (!findCart) { return responseHendler.notFound(res, message('cart').notFoundResource)}
             
-            return responseHendler.ok(res, message('get all cart').success)
+            const data = await cartDecoratorArray(findCart)
+            return responseHendler.ok(res, message('get cart').success, data)
  
         }
         catch(err) {

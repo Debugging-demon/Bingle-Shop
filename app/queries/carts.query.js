@@ -7,7 +7,19 @@ const findOneCart = async (status, auth) => {
         where: { 
             status_cart: status,
             user_id: auth,
+            },
+        include: [
+            {
+                model: User,
+            },
+            {
+                model: Item_cart,
+                include: {
+                    model: Item,
+                }
             }
+        ],
+            
     })
 } 
 
@@ -43,10 +55,11 @@ const updateCart = async (status, payload) => {
     )
 }
 
-
+   
 module.exports = {
     findOneCart,
     findAllCart,
     createCart,
-    updateCart
+    updateCart,
+
 }
