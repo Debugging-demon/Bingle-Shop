@@ -4,6 +4,7 @@ const { userQueries } = require('../queries')
 const { emailFormatValidator, phoneFormatValidator } = require('../middlewares/user.validation')
 const generateToken = require('../../lib/jwt')
 const { loginDecorator, profileDecorator } = require('../decorators/users-decorator')
+const { isMatch } = require('../../lib/bcrypt')
 class userController {
 
     async registerUser (req, res) {
@@ -21,8 +22,7 @@ class userController {
             if (phoneFormat === false) { return responseHendler.badRequest(res, message('phone').invalidEmailOrPassword)}
             
             //create a new user
-            const newUser = await userQueries.createUser(payload, 'user')
-            if (!newUser) { return responseHendler.internalError(res, message().serverError)}
+            await userQueries.createUser(payload, 'user')
 
             return responseHendler.ok(res, message('user').created)
         }
@@ -76,6 +76,7 @@ class userController {
             
             //create a new user
             const newUser = await userQueries.createUser(payload, 'admin')
+
             if (!newUser) { return responseHendler.internalError(res, message().serverError)}
 
             return responseHendler.ok(res, message('user').created)
@@ -95,7 +96,10 @@ class userController {
             
              const findUser = await userQueries.findUserByEmail(payload)
              if(!findUser) { return responseHendler.notFound(res,message('email').notFoundResource)}
- 
+            
+             const ismatch = await isMatch(payload.password, findUser)
+             if(!ismatch) { return responseHendler.notFound(res,message('wrong password').errorMessage)}
+
              const token = await generateToken(findUser)
              if(!token) { return responseHendler.internalError(res,message().serverError)}
  
