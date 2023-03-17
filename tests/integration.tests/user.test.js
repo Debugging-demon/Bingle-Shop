@@ -193,7 +193,7 @@ describe('Integration Testing: user.router', () => {
         
         describe('should be error', () => {
 
-            describe('user must register', () => {
+            describe('user forget to register', () => {
                 it('email not found', async () => {
                     const resp = await request(app)
                     .post('/v1/api/login')
@@ -211,7 +211,44 @@ describe('Integration Testing: user.router', () => {
                 })
             })
 
-            
+            describe('password is wrong', () => {
+
+                beforeEach( async () => {
+                    await User.create({
+                        fullname: 'Joko Integration',
+                        address: 'pacitan',
+                        phone: '084432145166',
+                        email: 'joko123@gmail.com',
+                        password: bcrypt.hashSync('jokoIntegration', 8),
+                        role: 'user'
+                    })
+                })
+                
+                afterEach( async() => {
+                    const findUser = await User.findOne({
+                        where: { email: "joko123@gmail.com" }
+                    })
+                    await User.destroy({
+                        where: { id: findUser.id}
+                    })
+                })
+
+                it('must wrong', async () => {
+                    const resp = await request(app)
+                    .post('/v1/api/login')
+                    .set('Content-Type', 'application/json')
+                    .set('Accept', 'application/json')
+                    .send({
+                        email: 'joko123@gmail.com',
+                        password: 'jokotidakIntegration',
+                    })
+    
+                expect(resp.body).toHaveProperty('message')
+                expect(resp.body.message).toBe('wrong password')
+                expect(resp.body.data).not.toHaveProperty('token')
+                expect(resp.status).toBe(404)
+                })
+            })
         })
     })
 })
