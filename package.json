@@ -15,7 +15,14 @@
     "validator": "^13.7.0"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start:dev": "cross-env NODE_ENV=development nodemon server.js",
+    "start": "cross-env NODE_ENV=production node server.js",
+    "test": "cross-env NODE_ENV=test jest --coverage",
+    "sequelize": "sequelize",
+    "db:migrate:development": "cross-env NODE_ENV=development sequelize db:migrate",
+    "db:migrate:undo:development": "cross-env NODE_ENV=development sequelize db:migrate:undo",
+    "db:migrate:prod": "cross-env NODE_ENV=production sequelize db:migrate",
+    "db:seed:development": "cross-env NODE_ENV=development sequelize db:seed:all"
   },
   "name": "challenge-binar",
   "version": "1.0.0",
@@ -24,8 +31,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/jest": "^29.4.4",
     "@types/sequelize": "^4.28.14",
+    "cross-env": "^7.0.3",
+    "jest": "^29.5.0",
     "nodemon": "^2.0.20",
-    "sequelize-cli": "^6.5.2"
+    "sequelize-cli": "^6.5.2",
+    "supertest": "^6.3.3"
   }
 }

@@ -30,14 +30,6 @@ const storage = new CloudinaryStorage({
         }
     }
 })
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, __basedir + '/storage/upload')
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, `${Date.now()}-${file.originalname}`) //
-//     },
-// })
 
 const uploadImage =  multer({
     storage: storage,

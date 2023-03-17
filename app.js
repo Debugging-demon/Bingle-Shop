@@ -4,6 +4,7 @@ const {userRouter, itemRouter, cartRouter, orderRouter, imageRouter } = require(
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
+app.use(express.urlencoded({extended: true}))
 // Router
 app.use('/v1', userRouter)
 app.use('/v1', itemRouter)
