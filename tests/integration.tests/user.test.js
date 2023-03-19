@@ -5,6 +5,7 @@ const app = require('../../app')
 const sequelize = require('../../db/config/config')
 const { User } = require('../../db/models')
 const bcrypt = require('bcrypt')
+const generateToken  = require('../../lib/jwt')
 
 describe('Integration Testing: user.router', () => {
 
@@ -17,6 +18,7 @@ describe('Integration Testing: user.router', () => {
     })
 
     describe('router: /v1/api/register/user', () => {
+
         describe('should be successful', () => {
 
             afterEach( async() => {
@@ -27,6 +29,8 @@ describe('Integration Testing: user.router', () => {
                     where: { id: findUser.id}
                 })
             })
+
+            
 
             it('should return success register user', async () => {
 
@@ -193,7 +197,7 @@ describe('Integration Testing: user.router', () => {
         
         describe('should be error', () => {
 
-            describe('user forget to register', () => {
+            describe('email is wrong', () => {
                 it('email not found', async () => {
                     const resp = await request(app)
                     .post('/v1/api/login')
@@ -252,4 +256,69 @@ describe('Integration Testing: user.router', () => {
         })
     })
     
+    describe('router: /v1/api/profile', () => {
+
+        describe('should be successfull', () => {
+
+            beforeEach( async () => {
+                await User.create({
+                    fullname: 'Joko Integration',
+                    address: 'pacitan',
+                    phone: '084432145166',
+                    email: 'joko123@gmail.com',
+                    password: bcrypt.hashSync('jokoIntegration', 8),
+                    role: 'user'
+                
+                })
+            })
+
+            afterEach( async() => {
+                const findUser = await User.findOne({
+                    where: { email: 'joko123@gmail.com' }
+                })
+                await User.destroy({
+                    where: { id: findUser.id}
+                })
+            })
+            
+            it('success get profile', async () => {
+
+                const findUser = await User.findOne({where: { email: 'joko123@gmail.com' }})
+
+                const payload = {
+                    id: findUser.id,
+                    role: findUser.role
+                }
+                const token = await generateToken(payload)
+                
+                const resp = await request(app)
+                    .get('/v1/api/profile')
+                    .set('Content-Type', 'application/json')
+                    .set('Accept', 'application/json')
+                    .set('authorization', token )
+    
+                expect(resp.body).toHaveProperty('message')
+                expect(resp.body.message).toBe('profile success')
+                expect(resp.status).toBe(200)
+            })
+        })  
+
+        describe('should be error', () => {
+            describe('if not login', () => {
+                it('because the token is null', async () => {
+
+                    const token = null
+                    
+                    const resp = await request(app)
+                        .get('/v1/api/profile')
+                        .set('Content-Type', 'application/json')
+                        .set('Accept', 'application/json')
+                        .set('authorization', token )
+        
+                    expect(resp.status).toBe(401)
+                })
+            })
+        })
+
+    })
 })
