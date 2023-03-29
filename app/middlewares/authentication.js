@@ -24,6 +24,25 @@ class tokenJwt {
         })
     }
 
+    verifyTokenSocket (socket, next) {
+
+        try {
+            const token = socket.handshake.headers['authorization']
+            if(!token) {throw new Error("jwt token not found!")}
+    
+            jwt.verify(token, config.secret, (err, decoded) =>{
+                if(err) {
+                    throw new Error('Authentication error')
+                }
+                socket.handshake.decodedJWT = decoded;
+                next()
+            })
+        } catch (error) {
+            next(error)
+        }
+        
+    }
+
 }
 
 module.exports = {

@@ -6,6 +6,11 @@ const app = require('./app')
 
 const port = process.env.PORT
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`server running on port ${port}`)
 })
+
+// socket.io
+const socketio = require('socket.io');
+const io = socketio(server);
+require('./app/routers/socketio.router')(io);
