@@ -5,6 +5,7 @@ const Category = require('./category.model')
 const Image = require('./images.model')
 const Order = require('./orders.model')
 const Item_cart = require('./item_cart.model')
+const Chat = require('./chats.model')
 const sequelize = require('sequelize')
 
 
@@ -51,6 +52,16 @@ Cart.hasMany(Item_cart, {
     foreignKey: 'cart_id'
 })
 
+Chat.belongsTo(User, {
+    as: 'owner',
+    foreignKey: 'sender_id'
+})
+
+User.hasMany(Chat, {
+    as: 'chats',
+    foreignKey: 'id'
+})
+
 // Cart.belongsToMany(Item, {through: Item_cart})
 // Item.belongsToMany(Cart, {through: Item_cart})
 // // order.hasOne(cart, {
@@ -66,5 +77,6 @@ module.exports = {
     Image,
     Order,
     Item_cart,
+    Chat,
     sequelize
 }
