@@ -6,9 +6,9 @@ const { cloudinary } = require('../../db/config/cloudinary')
 const { CloudinaryStorage } = require("multer-storage-cloudinary")
 
 const imageFilter = (req, file, cb) => {
-    if(file.mimetype.startsWith('image')) {
-        cb (null, true)
-    }else {
+    if (file.mimetype.startsWith('image')) {
+        cb(null, true)
+    } else {
         cb('please upload only images', false)
     }
 }
@@ -31,10 +31,10 @@ const storage = new CloudinaryStorage({
     }
 })
 
-const uploadImage =  multer({
+const uploadImage = multer({
     storage: storage,
     fileFilter: imageFilter,
-}).array('file',5) //untuk menentukan banyak image yg bisa diupload
+}).array('file', 5) //untuk menentukan banyak image yg bisa diupload
 
 let uploadFile = util.promisify(uploadImage)
 
