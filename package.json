@@ -20,8 +20,10 @@
     "test": "cross-env NODE_ENV=test jest --coverage",
     "sequelize": "sequelize",
     "db:migrate:development": "cross-env NODE_ENV=development sequelize db:migrate",
+    
     "db:migrate:undo:development": "cross-env NODE_ENV=development sequelize db:migrate:undo",
     "db:migrate:prod": "cross-env NODE_ENV=production sequelize db:migrate",
+    
     "db:seed:development": "cross-env NODE_ENV=development sequelize db:seed:all"
   },
   "name": "challenge-binar",
