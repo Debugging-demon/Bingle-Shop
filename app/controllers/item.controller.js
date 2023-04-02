@@ -59,10 +59,10 @@ class itemController {
             if(!payload) {return responseHendler.badRequest(res, message('req.params').incompleteKeyOrValue)}
 
             const findItem = await itemQueries.findById(payload)
-            if(!findItem) {return responseHendler.badRequest(res, message().serverError)}
-            
+            if(!findItem) {return responseHendler.notFound(res, message('item').notFoundResource)}
+
             const data = itemDecorator.itemDecoratorObject(findItem)
-            return responseHendler.ok(res, message('get item').successKeyOrValue, data)
+            return responseHendler.ok(res, message('get item').success, data)
         }
         
         catch(err) {
@@ -98,13 +98,12 @@ class itemController {
         try {
             const payload = req.params
             const auth = req.userId
-            
+            console.log('a')
             const findItem = await itemQueries.findByUserId(payload, auth)
             if(!findItem) { return responseHendler.notFound(res, message('item').notFoundResource)}
-
-            
-            const updateItem = await itemQueries.updateItem(findItem)
-
+            console.log('b')
+            const updateItem = await itemQueries.updateItem(findItem, req.body)
+            console.log('c')
             if(!updateItem) { return responseHendler.badRequest(res, message().serverError)}
 
             return responseHendler.ok(res, message('item').updated)

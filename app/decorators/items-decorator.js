@@ -28,7 +28,7 @@ const itemDecoratorArray = async (item, pagination) =>{
 
   const itemDecoratorObject = (item) =>{
     
-    const mappingImage = item.image.map((image) => {
+    const mappingImage = item.images.map((image) => {
       return {
         image_id: image.id,
         url: image.url
