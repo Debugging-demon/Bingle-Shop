@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
       context: .
     ports:
-      - 5151:5151
+      - 5252:5252
     depends_on:
       - automation_db
       - automation_testing_migration
@@ -30,6 +30,7 @@ services:
     env_file:
       - .env.development
     command: sh -c "npm run db:migrate:development && npm run db:seed:development"
+    # command: sh -c "npm run db:migrate:development"
     restart: on-failure
 
   automation_db:
