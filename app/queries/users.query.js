@@ -26,7 +26,7 @@ const findUserById = async (payload) => {
 }
 
 const deleteUser = async (payload) => {
-    return User.destroy({ where: {email: payload.email}})
+    return User.destroy({ where: { email: payload.email } })
 }
 
 
