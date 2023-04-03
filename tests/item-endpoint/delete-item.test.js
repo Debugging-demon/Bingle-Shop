@@ -24,14 +24,14 @@ describe('endpoint: delete v1/api/item/:id', () => {
                 fullname: 'Asep Surasep',
                 address: 'Bandung',
                 phone: '084432145166',
-                email: 'asep@gmail.com',
+                email: 'asep1@gmail.com',
                 password: bcrypt.hashSync('asepvsAb1', 8),
                 role: 'seller'
             })
 
             await Item.create({
                 user_id: createUser.id,
-                name_item: "tisu paseo",
+                name_item: "tisu paseo 500gr",
                 category_id: 1,
                 price: 3500,
                 quantity: 20,
@@ -40,18 +40,15 @@ describe('endpoint: delete v1/api/item/:id', () => {
 
         afterEach(async () => {
 
-            const findUser = await User.findOne({
-                where: { email: 'asep@gmail.com' }
-            })
             await User.destroy({
-                where: { id: findUser.id}
+                where: { email: 'asep1@gmail.com'}
             })
 
         })
 
         it('always success', async () => {
 
-            const findUser = await User.findOne({where: { email: 'asep@gmail.com' }})
+            const findUser = await User.findOne({where: { email: 'asep1@gmail.com' }})
 
             const payload = {
                 id: findUser.id,
@@ -59,7 +56,7 @@ describe('endpoint: delete v1/api/item/:id', () => {
             }
             const token = await generateToken(payload)
 
-            const findItem = await Item.findOne({ where: {name_item: "tisu paseo"} })
+            const findItem = await Item.findOne({ where: {name_item: "tisu paseo 500gr"} })
             const pathParams = findItem.id
 
             const res = await request(app)
@@ -82,7 +79,7 @@ describe('endpoint: delete v1/api/item/:id', () => {
                 fullname: 'andika',
                 address: 'Bandung',
                 phone: '084432145166',
-                email: 'andika@gmail.com',
+                email: 'andika1@gmail.com',
                 password: bcrypt.hashSync('asepvsAb1', 8),
                 role: 'user'
             })
@@ -107,12 +104,12 @@ describe('endpoint: delete v1/api/item/:id', () => {
         afterEach(async () => {
 
             await User.destroy({where: { email: 'asep@gmail.com'}})
-            await User.destroy({where: { email: 'andika@gmail.com'}})
+            await User.destroy({where: { email: 'andika1@gmail.com'}})
             await Item.destroy({where: { name_item: "tisu paseo"}})
 
         })
         it('when not owner of items to delete', async () => {
-            const findUser = await User.findOne({where: { email: 'andika@gmail.com' }})
+            const findUser = await User.findOne({where: { email: 'andika1@gmail.com' }})
 
             const payload = {
                 id: findUser.id,

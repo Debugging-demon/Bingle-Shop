@@ -98,12 +98,10 @@ class itemController {
         try {
             const payload = req.params
             const auth = req.userId
-            console.log('a')
             const findItem = await itemQueries.findByUserId(payload, auth)
             if(!findItem) { return responseHendler.notFound(res, message('item').notFoundResource)}
-            console.log('b')
+            
             const updateItem = await itemQueries.updateItem(findItem, req.body)
-            console.log('c')
             if(!updateItem) { return responseHendler.badRequest(res, message().serverError)}
 
             return responseHendler.ok(res, message('item').updated)
