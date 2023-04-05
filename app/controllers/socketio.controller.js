@@ -3,7 +3,10 @@ const { userQueries, chatQueries } = require('../queries');
 class socketioController {
     async chat(socket) {
         // ambil user dari tabel users
-        const sender = await userQueries.findUserById(socket.handshake.decodedJWT.user_id);
+        // socket.handshake.decodedJWT.user_id
+        const auth = socket.handshake.decodedJWT.id
+        console.log(auth)
+        const sender = await userQueries.findUserById(auth);
         
         // cek apakah sender id sama dengan room id atau admin
         if (!(sender.id == socket.handshake.query.room_id || sender.role == "admin")) {
