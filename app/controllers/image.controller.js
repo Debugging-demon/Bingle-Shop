@@ -39,7 +39,7 @@ class imageController {
         }
     }
 
-     async removeImage (req, res, next) {
+     async removeImage (req, res) {
 
         try {
             //find image yg akan dihapus
