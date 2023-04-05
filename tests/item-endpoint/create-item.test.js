@@ -81,7 +81,7 @@ describe('endpoint: post v1/api/item', () => {
                     email: 'joko321@gmail.com',
                     password: bcrypt.hashSync('jokoIntegration', 8),
                     role: 'user'
-                
+
                 })
 
 
