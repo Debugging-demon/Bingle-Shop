@@ -11,7 +11,7 @@ services:
       - automation_db
       - automation_testing_migration
     env_file:
-      - .env.development
+      - .env.production
     command: sh -c "npm run start:dev"
     volumes:
       - type: volume
@@ -28,8 +28,8 @@ services:
     depends_on:
       - automation_db
     env_file:
-      - .env.development
-    command: sh -c "npm run db:migrate:development && npm run db:seed:development"
+      - .env.production
+    command: sh -c "npm run db:migrate:prod && npm run db:seed:prod"
     # command: sh -c "npm run db:migrate:development"
     restart: on-failure
 
@@ -43,3 +43,5 @@ services:
 
 volumes:
   automation_module_volume:
+
+  #automation_db
