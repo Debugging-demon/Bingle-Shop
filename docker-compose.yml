@@ -12,7 +12,7 @@ services:
       - automation_testing_migration
     env_file:
       - .env.production
-    command: sh -c "npm run start:dev"
+    command: sh -c "npm run start"
     volumes:
       - type: volume
         source: automation_module_volume
