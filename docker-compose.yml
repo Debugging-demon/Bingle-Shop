@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
       context: .
     ports:
-      - 5252:5252
+      - 5261:5252
     depends_on:
       - automation_db
       - automation_testing_migration
@@ -36,7 +36,7 @@ services:
   automation_db:
     image: postgres:14
     ports:
-      - 5437:5432
+      - 5430:5432
     environment:
       - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=BingleShop
