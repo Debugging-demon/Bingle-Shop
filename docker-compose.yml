@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  bingle-shop:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 5261:5252
+    depends_on:
+      - automation_db
+      - automation_testing_migration
+    env_file:
+      - .env.development
+    command: sh -c "npm run start:dev"
+    volumes:
+      - type: volume
+        source: automation_module_volume
+        target: /app/node_modules
+      - type: bind
+        source: .
+        target: /app
+  
+  automation_testing_migration:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - automation_db
+    env_file:
+      - .env.development
+    command: sh -c "npm run db:migrate:development && npm run db:seed:development"
+    # command: sh -c "npm run db:migrate:development"
+    restart: on-failure
+
+  automation_db:
+    image: postgres:14
+    ports:
+      - 5430:5432
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=BingleShop
+
+volumes:
+  automation_module_volume:
