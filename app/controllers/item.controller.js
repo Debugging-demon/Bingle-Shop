@@ -38,9 +38,10 @@ class itemController {
             if(getAllItem.length == 0) { return responseHendler.notFound(res, message('item').notFoundResource)}
 
             // const getDataPagging = getPagingData(getAllItem, page, limit)
-            // console.log(getDataPagging)
+            // console.log(getDataPaggi ng)
 
             const data = await itemDecorator.itemDecoratorArray(getAllItem)
+            // const data =  getAllItem
 
             return responseHendler.ok(res, message('get item').success, data)
             

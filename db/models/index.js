@@ -62,6 +62,9 @@ User.hasMany(Chat, {
     foreignKey: 'id'
 })
 
+Item.belongsTo(User, {
+    foreignKey: 'user_id'
+})
 // Cart.belongsToMany(Item, {through: Item_cart})
 // Item.belongsToMany(Cart, {through: Item_cart})
 // // order.hasOne(cart, {

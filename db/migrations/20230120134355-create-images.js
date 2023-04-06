@@ -18,6 +18,10 @@ module.exports = {
             as: "item_id"
           }
         },
+        public_id: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
         url: {
           type: Sequelize.STRING,
           allowNull: false
