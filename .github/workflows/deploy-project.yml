@@ -21,6 +21,6 @@ jobs:
           password: Kin@n-g1nGD3mon
           script:
             cd /root/Bingle-Shop
+            git pull origin dev-new
            
-
-          
+           
