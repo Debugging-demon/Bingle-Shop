@@ -1,0 +1,21 @@
+name: Deploy Automation Testing Debugging Demon Project
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Deploy to vps
+        uses: appleboy/ssh-action@master
+        with:
+          host: 191.96.57.57
+          username: root
+          
