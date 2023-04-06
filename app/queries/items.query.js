@@ -1,4 +1,4 @@
-const { Item, Image, Category } = require('../../db/models')
+const { Item, Image, Category, User } = require('../../db/models')
 
 //create item
 const createItem = async (payload, auth) => {
@@ -15,7 +15,8 @@ const findAllItem = (limit, offset) => {
     return Item.findAll({
         include: [
             { model: Image},
-            { model: Category}
+            { model: Category},
+            { model: User}
         ],
         limit: limit,
         offset: offset
@@ -71,8 +72,8 @@ const deleteItem = (payload) => {
     })
 }
 
-const updateItem = (payload) => {
-    return Item.update(req.body, {
+const updateItem = (payload, body) => {
+    return Item.update(body, {
         where: { 
             id: payload.id,
          }

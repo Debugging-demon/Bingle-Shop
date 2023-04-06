@@ -38,9 +38,10 @@ class itemController {
             if (getAllItem.length == 0) { return responseHendler.notFound(res, message('item').notFoundResource) }
 
             // const getDataPagging = getPagingData(getAllItem, page, limit)
-            // console.log(getDataPagging)
+            // console.log(getDataPaggi ng)
 
             const data = await itemDecorator.itemDecoratorArray(getAllItem)
+            // const data =  getAllItem
 
             return responseHendler.ok(res, message('get item').success, data)
 
@@ -60,10 +61,11 @@ class itemController {
             if (!payload) { return responseHendler.badRequest(res, message('req.params').incompleteKeyOrValue) }
 
             const findItem = await itemQueries.findById(payload)
-            if (!findItem) { return responseHendler.badRequest(res, message().serverError) }
+
+            if (!findItem) { return responseHendler.notFound(res, message('item').notFoundResource) }
 
             const data = itemDecorator.itemDecoratorObject(findItem)
-            return responseHendler.ok(res, message('get item').successKeyOrValue, data)
+            return responseHendler.ok(res, message('get item').success, data)
         }
 
         catch (err) {
@@ -103,9 +105,7 @@ class itemController {
             const findItem = await itemQueries.findByUserId(payload, auth)
             if (!findItem) { return responseHendler.notFound(res, message('item').notFoundResource) }
 
-
-            const updateItem = await itemQueries.updateItem(findItem)
-
+            const updateItem = await itemQueries.updateItem(findItem, req.body)
             if (!updateItem) { return responseHendler.badRequest(res, message().serverError) }
 
             return responseHendler.ok(res, message('item').updated)

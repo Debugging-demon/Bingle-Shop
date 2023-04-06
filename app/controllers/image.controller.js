@@ -13,8 +13,9 @@ class imageController {
             const id = req.params.id
             
             //deploy storage dicloudinary
-            await uploadFile(req, res)
-    
+            const uploadImage = await uploadFile(req, res)
+            console.log(uploadImage)
+
             if(req.files === undefined) { return responseHendler.badRequest(res, message('images').incompleteKeyOrValue)}
 
             //use to bulk upload
@@ -22,7 +23,8 @@ class imageController {
             let images = req.files.map((item) => {
                 const image = {}
                 image.item_id = id
-                image.url = item.filename
+                image.public_id = item.filename,
+                image.url = item.path
                 
                 return image
             })
@@ -39,7 +41,7 @@ class imageController {
         }
     }
 
-     async removeImage (req, res, next) {
+     async removeImage (req, res) {
 
         try {
             //find image yg akan dihapus
@@ -48,9 +50,9 @@ class imageController {
             const findImage = await imageQueries.findImage(payload)
             if(!findImage) { return responseHendler.notFound(res, message('image').notFoundResource)}
 
-            console.log(findImage.url)
-            const deleteImageCloud = await deleteImageCloudinary(findImage.url)
-            console.log(deleteImageCloud)
+            // console.log(findImage.url)
+            const deleteImageCloud = await deleteImageCloudinary(findImage.public_id)
+            //console.log(deleteImageCloud)
 
             if(deleteImageCloud.result == 'not found') {return responseHendler.badRequest(res, message('gk bisa delete di cloudinary').errorMessage)}
 

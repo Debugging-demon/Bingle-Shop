@@ -17,7 +17,7 @@ const findChatByRoomId = (payload) => {
 
 const createChat = (payload, data) => {
     return Chat.create({
-        sender_id : payload.decodedJWT.user_id,
+        sender_id : payload.decodedJWT.id,
         room_id : payload.query.room_id,
         message: data
     })

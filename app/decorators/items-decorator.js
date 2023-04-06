@@ -1,5 +1,3 @@
-
-
 const itemDecoratorArray = async (item, pagination) => {
 
   const mappedItem = item.map((data) => {
@@ -7,6 +5,7 @@ const itemDecoratorArray = async (item, pagination) => {
     return {
       id_item: data.id,
       name_item: data.name_item,
+      Penjual: data.user.fullname,
       category_id: data.category_id,
       category_name: data.category.category_name,
       description: data.item_description,
@@ -25,6 +24,7 @@ const itemDecoratorArray = async (item, pagination) => {
   })
   return await Promise.all(mappedItem)
 }
+
 
 const itemDecoratorObject = (item) => {
 

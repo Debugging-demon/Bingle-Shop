@@ -22,10 +22,10 @@ const storage = new CloudinaryStorage({
         }, // supports promises as well
         public_id: (req, file) => {
             console.log(
-                new Date().toISOString().replace(/:/g, "-") + file.originalname
+                new Date().toISOString().replace(/:/g, "-") //+ file.originalname.replace(/''/g, "-")
             )
             return (
-                new Date().toISOString().replace(/:/g, "-") + file.originalname
+                new Date().toISOString().replace(/:/g, "-") //+ file.originalname.replace(/''/g, "-")
             )
         }
     }

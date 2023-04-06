@@ -1,0 +1,397 @@
+openapi: 3.0.0
+info:
+  title: Bingle-Shop
+  version: 1.0.0
+servers:
+  - url: http://localhost:5151
+tags:
+  - name: EndPoin User
+  - name: EndPoin Item
+  - name: Endpoin Cart
+  - name: EndPoin Order
+  - name: EndPoin Image
+paths:
+  /v1/api/register/user:
+    post:
+      tags:
+        - EndPoin User
+      summary: Register User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                fullname: Lala1
+                address: gg. masjid alfatah
+                phone: "082239236521"
+                email: lala1@gmail.com
+                password: makannasi
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/register/admin:
+    post:
+      tags:
+        - EndPoin User
+      summary: Register Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                fullname: yasin2
+                address: klaten
+                phone: "082239236521"
+                email: yasin2@gmail.com
+                password: makannasi
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/register/seller:
+    post:
+      tags:
+        - EndPoin User
+      summary: Register Seller
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                fullname: Ahmad Zaki
+                address: gg. masjid alfatah
+                phone: "082239236521"
+                email: zaki@gmail.com
+                password: zakiahmad
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/login:
+    post:
+      tags:
+        - EndPoin User
+      summary: Login User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: yasin2@gmail.com
+                password: makannasi
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/profile:
+    get:
+      tags:
+        - EndPoin User
+      summary: Profile User
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzA4LCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgwNjc4MjU5LCJleHAiOjE2ODA2ODE4NTl9.rZp74PIQvYwe3VBYHJQXgUj8_0PZIKpZVVGwKa4ASX4
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/item:
+    post:
+      tags:
+        - EndPoin Item
+      summary: Create Item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name_item: mie sedap original
+                category_id: "1"
+                price: 3500
+                quantity: 20
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzA4LCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgwNjc4NTQyLCJleHAiOjE2ODA2ODIxNDJ9.jH0a1ApUZxHxiDt9n-khz_LZTcBE1g1PzDA3KlCUKMA
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - EndPoin Item
+      summary: Read All Item
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: "4"
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: "5"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/item/{id}:
+    get:
+      tags:
+        - EndPoin Item
+      summary: Read Item By Id
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: "307"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - EndPoin Item
+      summary: Delete Item
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzA4LCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgwNjc4NTQyLCJleHAiOjE2ODA2ODIxNDJ9.jH0a1ApUZxHxiDt9n-khz_LZTcBE1g1PzDA3KlCUKMA
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: "686"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - EndPoin Item
+      summary: Update Data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                quantity: 2
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzA4LCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgwMzY1MTYxLCJleHAiOjE2ODAzNjg3NjF9.YKRW7bDW80iuwnCpf1h_9ax-Ai1lOu4pds0fi5VztTw
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: "301"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/itemseller:
+    get:
+      tags:
+        - EndPoin Item
+      summary: get item seller
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzA4LCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgwNjgwMDMwLCJleHAiOjE2ODA2ODM2MzB9.b_2y2v2t956h02crizOIs0CjdL_9maul-PUDeZDyr7E
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/cart/{id}:
+    post:
+      tags:
+        - Endpoin Cart
+      summary: Add Cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                quantity_order: 1
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY2NSwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODA2Nzk0MTgsImV4cCI6MTY4MDY4MzAxOH0.KxqfTG-8svm_741nq6n89OjO0h2ilv1K5E-f0zAPVrY
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: "688"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/cart:
+    get:
+      tags:
+        - Endpoin Cart
+      summary: Show Cart
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY2NSwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODA2Nzk0MTgsImV4cCI6MTY4MDY4MzAxOH0.KxqfTG-8svm_741nq6n89OjO0h2ilv1K5E-f0zAPVrY
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/order:
+    post:
+      tags:
+        - EndPoin Order
+      summary: Checkout
+      requestBody:
+        content: {}
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY2NSwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODA2Nzk0MTgsImV4cCI6MTY4MDY4MzAxOH0.KxqfTG-8svm_741nq6n89OjO0h2ilv1K5E-f0zAPVrY
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - EndPoin Order
+      summary: Payment Confirm
+      requestBody:
+        content: {}
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY2NSwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODA2Nzk0MTgsImV4cCI6MTY4MDY4MzAxOH0.KxqfTG-8svm_741nq6n89OjO0h2ilv1K5E-f0zAPVrY
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - EndPoin Order
+      summary: Cancel Order
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InNlbGxlciIsImlhdCI6MTY3NTMzNzc0NiwiZXhwIjoxNjc1NDI0MTQ2fQ._vi7f4oC_lzE4XaKdSTK5m6LK9qQG6UMwbeQh15zMw4
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/api/image/{id}:
+    post:
+      tags:
+        - EndPoin Image
+      summary: Upload Image
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzA4LCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgwNjgwMDMwLCJleHAiOjE2ODA2ODM2MzB9.b_2y2v2t956h02crizOIs0CjdL_9maul-PUDeZDyr7E
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: "687"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - EndPoin Image
+      summary: Delete Image
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InNlbGxlciIsImlhdCI6MTY3ODUxOTgxMSwiZXhwIjoxNjc4NTIwMTExfQ.YSUBFFZwE17yv-bdVCjcGdLmbbDR-OYLDsILQ7SJzjc
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: "1"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}

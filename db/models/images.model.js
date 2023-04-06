@@ -16,6 +16,10 @@ image.init(
       allowNull: false,
       field: 'item_id'
     },
+    public_id: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     url: {
       type: DataTypes.STRING,
       allowNull: false
