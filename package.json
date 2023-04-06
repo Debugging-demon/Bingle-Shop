@@ -28,7 +28,8 @@
     "db:migrate:undo:development": "cross-env NODE_ENV=development sequelize db:migrate:undo",
     "db:migrate:prod": "cross-env NODE_ENV=production sequelize db:migrate",
     "db:seed:development": "cross-env NODE_ENV=development sequelize db:seed:all",
-    "db:seed:prod": "cross-env NODE_ENV=production sequelize db:seed:all"
+    "db:seed:prod": "cross-env NODE_ENV=production sequelize db:seed:all",
+    "db:migrate:test": "cross-env NODE_ENV=test sequelize db:migrate"
   },
   "name": "challenge-binar",
   "version": "1.0.0",

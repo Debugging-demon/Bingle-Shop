@@ -10,8 +10,11 @@ services:
     depends_on:
       - automation_db
       - automation_testing_migration
+      - test_db
+      - test_migration
     env_file:
       - .env.production
+      - .env.test
     command: sh -c "npm run start"
     volumes:
       - type: volume
@@ -33,6 +36,18 @@ services:
     # command: sh -c "npm run db:migrate:development"
     restart: on-failure
 
+  test_migration:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - test_db
+    env_file:
+      - .env.test
+    command: sh -c "npm run db:migrate:test"
+    # command: sh -c "npm run db:migrate:development"
+    restart: on-failure
+
   automation_db:
     image: postgres:14
     ports:
@@ -40,6 +55,17 @@ services:
     environment:
       - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=DB_NAME=BingleShop
+
+  test_db:
+    image: postgres:14
+    ports:
+      - 5430:5432
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=DB_NAME=BingleShop-test
+  
+  
+  
 
 
 volumes:
