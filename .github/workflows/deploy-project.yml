@@ -3,7 +3,7 @@ name: Deploy Automation Testing Debugging Demon Project
 on:
   push:
     branches:
-      - "master"
+      - "dev-new"
 
 jobs:
   build:
@@ -19,7 +19,9 @@ jobs:
           host: 191.96.57.57
           username: root
           password: Kin@n-g1nGD3mon
-          script:
+          script: |
             cd /root/Bingle-Shop
-
-          
+            git pull origin dev-new
+            docker compose down
+            docker compose up -d --build
+           
