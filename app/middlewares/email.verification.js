@@ -27,6 +27,49 @@ async function sendVerificationEmail(newUser) {
     console.log(`Verification email sent to ${newUser.email}: ${info.messageId}`);
 }
 
+async function checkoutOrder(findUser, createOrder) {
+    const mailOptions = {
+        from: "'Debugging Demon'<no-reply@gmail.com>",
+        to: findUser.email,
+        subject: 'Checkout Order',
+        html: `Halo ${findUser.fullname}, Selesaikan pesananmu :<br> 
+        Total Bayar : ${createOrder.total_price}`,
+    };
+    const info = await transport.sendMail(
+        mailOptions
+    );
+    console.log(`Verification email sent to ${findUser.email}: ${info.messageId}`);
+}
+
+async function payOrder(findUser, createOrder) {
+    const mailOptions = {
+        from: "'Debugging Demon'<no-reply@gmail.com>",
+        to: findUser.email,
+        subject: 'Pembayaran Terverifikasi',
+        html: `Halo ${findUser.fullname}, Pembayaran telah terverifikasi :<br> 
+        Total Bayar : ${createOrder.total_price} <br>
+        terima kasih telah berbelanja di Bingleshop.`,
+    };
+    const info = await transport.sendMail(
+        mailOptions
+    );
+}
+
+async function cancelOrder(findUser) {
+    const mailOptions = {
+        from: "'Debugging Demon'<no-reply@gmail.com>",
+        to: findUser.email,
+        subject: 'Pesanan dibatalkan',
+        html: `Halo ${findUser.fullname}, Pesananmu telah dibatalkan.`,
+    };
+    const info = await transport.sendMail(
+        mailOptions
+    );
+}
+
 module.exports = {
     sendVerificationEmail,
+    checkoutOrder,
+    payOrder,
+    cancelOrder
 };

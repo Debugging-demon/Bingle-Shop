@@ -26,7 +26,7 @@ class userController {
             const newUser = await userQueries.createUser(payload, 'user')
             if (!newUser) { return responseHendler.internalError(res, message().serverError) }
 
-            // await sendVerificationEmail(newUser)
+            await sendVerificationEmail(newUser)
             return responseHendler.ok(res, message('user').created)
         }
 
@@ -54,8 +54,7 @@ class userController {
             const newUser = await userQueries.createUser(payload, 'seller')
             if (!newUser) { return responseHendler.internalError(res, message().serverError) }
 
-            // await sendVerificationEmail(newUser)
-            // console.log(newUser.email);
+            await sendVerificationEmail(newUser)
             return responseHendler.ok(res, message('user').created)
         }
 
@@ -84,7 +83,7 @@ class userController {
 
             if (!newUser) { return responseHendler.internalError(res, message().serverError) }
 
-            // await sendVerificationEmail(newUser)
+            await sendVerificationEmail(newUser)
             return responseHendler.ok(res, message('user').created)
         }
 
@@ -107,6 +106,8 @@ class userController {
 
             if (findUser.is_verified) { return responseHendler.badRequest(res, message('token').incompleteKeyOrValue) }
 
+            findUser.is_verified = true;
+            findUser.verification_token = null;
             await findUser.save();
             return responseHendler.ok(res, message('Token').updated)
         } catch (error) {

@@ -10,32 +10,32 @@ class itemController {
     async createItem(req, res) {
         try {
             const payload = req.body
-            if(!payload) { return responseHendler.notFound(res, message('body').notFoundResource)}
-            
+            if (!payload) { return responseHendler.notFound(res, message('body').notFoundResource) }
+
             const auth = req.userId
             // create item
             const createItem = await itemQueries.createItem(payload, auth)
-            if(!createItem) { return responseHendler.badRequest(res, message('item').invalidCreateResource)}
-            
+            if (!createItem) { return responseHendler.badRequest(res, message('item').invalidCreateResource) }
+
             return responseHendler.ok(res, message('item').created)
         }
-        
-        catch(err) {
+
+        catch (err) {
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
-        } 
+        }
     }
 
-    async readItem (req, res) {
+    async readItem(req, res) {
 
         try {
 
-            const { page = '1', limit = '5'} = req.query
-            
+            const { page = '1', limit = '5' } = req.query
+
             const pagin = pagination(page, limit)
 
-            const getAllItem =  await itemQueries.findAllItem(pagin.limitInt, pagin.offset)
-            if(getAllItem.length == 0) { return responseHendler.notFound(res, message('item').notFoundResource)}
+            const getAllItem = await itemQueries.findAllItem(pagin.limitInt, pagin.offset)
+            if (getAllItem.length == 0) { return responseHendler.notFound(res, message('item').notFoundResource) }
 
             // const getDataPagging = getPagingData(getAllItem, page, limit)
             // console.log(getDataPagging)
@@ -43,99 +43,100 @@ class itemController {
             const data = await itemDecorator.itemDecoratorArray(getAllItem)
 
             return responseHendler.ok(res, message('get item').success, data)
-            
+
         }
-        
-        catch(err) {
+
+        catch (err) {
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
-        } 
+        }
     }
 
-    async readItemById (req, res) {
+    async readItemById(req, res) {
 
         try {
             const payload = req.params
-            if(!payload) {return responseHendler.badRequest(res, message('req.params').incompleteKeyOrValue)}
+            console.log(!payload);
+            if (!payload) { return responseHendler.badRequest(res, message('req.params').incompleteKeyOrValue) }
 
             const findItem = await itemQueries.findById(payload)
-            if(!findItem) {return responseHendler.badRequest(res, message().serverError)}
-            
+            if (!findItem) { return responseHendler.badRequest(res, message().serverError) }
+
             const data = itemDecorator.itemDecoratorObject(findItem)
             return responseHendler.ok(res, message('get item').successKeyOrValue, data)
         }
-        
-        catch(err) {
+
+        catch (err) {
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
-        } 
+        }
     }
 
-    async deleteItem (req, res) {
+    async deleteItem(req, res) {
 
         try {
             const payload = req.params
             const auth = req.userId
-            
+
             const findItem = await itemQueries.findByUserId(payload, auth)
-            if(!findItem) { return responseHendler.notFound(res, message('item').notFoundResource)}
+            if (!findItem) { return responseHendler.notFound(res, message('item').notFoundResource) }
 
             const deleteItem = await itemQueries.deleteItem(payload)
-            if(!deleteItem) { return responseHendler.badRequest(res, message().serverError)}
+            if (!deleteItem) { return responseHendler.badRequest(res, message().serverError) }
 
             return responseHendler.ok(res, message('item').deleted)
         }
-        
-        catch(err) {
+
+        catch (err) {
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
-        } 
+        }
 
     }
 
-    async updateItem (req, res) {
-        
+    async updateItem(req, res) {
+
         try {
             const payload = req.params
             const auth = req.userId
-            
-            const findItem = await itemQueries.findByUserId(payload, auth)
-            if(!findItem) { return responseHendler.notFound(res, message('item').notFoundResource)}
 
-            
+            const findItem = await itemQueries.findByUserId(payload, auth)
+            if (!findItem) { return responseHendler.notFound(res, message('item').notFoundResource) }
+
+
             const updateItem = await itemQueries.updateItem(findItem)
 
-            if(!updateItem) { return responseHendler.badRequest(res, message().serverError)}
+            if (!updateItem) { return responseHendler.badRequest(res, message().serverError) }
 
             return responseHendler.ok(res, message('item').updated)
         }
-        
-        catch(err) {
+
+        catch (err) {
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
-        } 
+        }
     }
 
     async getItemSeller(req, res) {
         try {
 
-            const { page = '1', limit = '5'} = req.query
-            
+            const { page = '1', limit = '5' } = req.query
+
             const pagin = pagination(page, limit)
 
-            const auth =  req.userId
+            const auth = req.userId
             const findAllItem = await itemQueries.findAllItemById(auth, pagin.limitInt, pagin.offset)
-            if(!findAllItem) { return responseHendler.notFound(res, message('item').notFoundResource)}
+            if (!findAllItem) { return responseHendler.notFound(res, message('item').notFoundResource) }
 
             const data = await itemDecorator.itemDecoratorArray(findAllItem)
 
             return responseHendler.ok(res, message('get item').success, data)
         }
 
-        catch(err) {
+        catch (err) {
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
-        } 
+        }
     }
 }
 
