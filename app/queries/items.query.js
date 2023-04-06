@@ -71,8 +71,8 @@ const deleteItem = (payload) => {
     })
 }
 
-const updateItem = (payload) => {
-    return Item.update(req.body, {
+const updateItem = (payload, body) => {
+    return Item.update(body, {
         where: { 
             id: payload.id,
          }

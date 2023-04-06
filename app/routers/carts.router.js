@@ -1,6 +1,7 @@
 const { cartController } = require('../controllers/cart.controller')
 const router = require('express').Router()
 const { tokenJwt } = require('../middlewares/authentication')
+const auth = require('../middlewares/authorization')
 
 
 
@@ -9,7 +10,7 @@ const tokenjwt = new tokenJwt()
 
 
 //add cart
-router.post('/api/cart/:id',tokenjwt.verifyToken, cartcontroller.addCart)
+router.post('/api/cart/:id',tokenjwt.verifyToken, auth.authorization('user'), cartcontroller.addCart)
 
 //show cart
 router.get('/api/cart',tokenjwt.verifyToken, cartcontroller.showCart)
