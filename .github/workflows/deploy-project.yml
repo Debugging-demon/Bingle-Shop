@@ -3,7 +3,7 @@ name: Deploy Automation Testing Debugging Demon Project
 on:
   push:
     branches:
-      - "master"
+      - "dev-new"
 
 jobs:
   build:
