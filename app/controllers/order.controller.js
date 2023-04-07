@@ -1,4 +1,4 @@
-const { cartQueries, orderQueries, itemCartQueries, itemQueries } = require('../queries')
+const { userQueries, cartQueries, orderQueries, itemCartQueries, itemQueries } = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
 const { checkoutOrder, payOrder, cancelOrder } = require('../middlewares/email.verification');
@@ -44,7 +44,7 @@ class orderController {
             const findUser = await userQueries.findUserById(auth)
 
             //send email
-            await checkoutOrder(findUser, createOrder)
+            checkoutOrder(findUser, createOrder)
 
             //update status cart
             const updateCart = await cartQueries.updateCart('process', findCart)
@@ -82,7 +82,7 @@ class orderController {
             const findUser = await userQueries.findUserById(auth)
 
             //send email
-            await payOrder(findUser, findOrder)
+            payOrder(findUser, findOrder)
 
             const updateCart = await cartQueries.updateCart('success', findCart)
             if (!updateCart) { return responseHendler.badRequest(res, message('cart').invalidCreateResource) }
@@ -104,7 +104,7 @@ class orderController {
             //find order dengan status pending
             const auth = req.userId
             const findOrder = await orderQueries.findOrder(auth, 'pending')
-            if (findOrder) { return responseHendler.notFound(res, message('order').notFoundResource) }
+            if (!findOrder) { return responseHendler.notFound(res, message('order').notFoundResource) }
 
             //delete order
             const deleteOrder = await orderQueries.deleteOrder(findOrder)
@@ -123,7 +123,7 @@ class orderController {
 
             const findUser = await userQueries.findUserById(auth)
             //send email
-            await cancelOrder(findUser)
+            cancelOrder(findUser)
 
             for (let item of findItemCart) {
                 const findItem = await itemQueries.findByPayload(item.item_id)

@@ -16,7 +16,8 @@ const MESSAGE = (key) => {
   const unathentication = 'failed to authenticate';
   const serverError = 'Internal Server Error';
   const duplicateData = `${key} already registered in our database`;
-  const userVerified = `User is already verified`;
+  const userNotVerified = `User is not verified, please verified from ${key}`;
+  const userIsVerified = `User is already verified`;
   const errorMessage = key
 
   return message = {
@@ -36,7 +37,8 @@ const MESSAGE = (key) => {
     unathorization,
     serverError,
     duplicateData,
-    userVerified,
+    userNotVerified,
+    userIsVerified,
     errorMessage,
   }
 }

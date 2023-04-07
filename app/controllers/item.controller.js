@@ -34,6 +34,7 @@ class itemController {
 
             const pagin = pagination(page, limit)
 
+            console.log(req.query);
             const getAllItem = await itemQueries.findAllItem(pagin.limitInt, pagin.offset)
             if (getAllItem.length == 0) { return responseHendler.notFound(res, message('item').notFoundResource) }
 

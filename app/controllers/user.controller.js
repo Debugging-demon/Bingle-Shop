@@ -26,7 +26,8 @@ class userController {
             const newUser = await userQueries.createUser(payload, 'user')
             if (!newUser) { return responseHendler.internalError(res, message().serverError) }
 
-            await sendVerificationEmail(newUser)
+            //send email
+            sendVerificationEmail(newUser)
             return responseHendler.ok(res, message('user').created)
         }
 
@@ -54,7 +55,8 @@ class userController {
             const newUser = await userQueries.createUser(payload, 'seller')
             if (!newUser) { return responseHendler.internalError(res, message().serverError) }
 
-            await sendVerificationEmail(newUser)
+            // send email
+            sendVerificationEmail(newUser)
             return responseHendler.ok(res, message('user').created)
         }
 
@@ -83,7 +85,8 @@ class userController {
 
             if (!newUser) { return responseHendler.internalError(res, message().serverError) }
 
-            await sendVerificationEmail(newUser)
+            // send email
+            sendVerificationEmail(newUser)
             return responseHendler.ok(res, message('user').created)
         }
 
@@ -97,10 +100,9 @@ class userController {
         try {
 
             const token = req.query.token
-            const id = req.query.id
 
-            const findUser = await userQueries.findUserById(id)
-            if (findUser) { return responseHendler.badRequest(res, message('id').invalidID) }
+            const findUser = await userQueries.findUserByToken(token)
+            if (!findUser) { return responseHendler.badRequest(res, message('id').invalidID) }
 
             if (findUser.is_verified) { return responseHendler.badRequest(res, message('id').userVerified) }
 
@@ -127,6 +129,8 @@ class userController {
 
             const ismatch = await isMatch(payload.password, findUser)
             if (!ismatch) { return responseHendler.notFound(res, message('wrong password').errorMessage) }
+
+            if (!findUser.is_verified) { return responseHendler.badRequest(res, message('email').userNotVerified) }
 
             const token = await generateToken(findUser)
             if (!token) { return responseHendler.internalError(res, message().serverError) }

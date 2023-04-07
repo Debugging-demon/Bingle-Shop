@@ -25,6 +25,12 @@ const findUserById = async (payload) => {
     })
 }
 
+const findUserByToken = async (payload) => {
+    return User.findOne({
+        where: { verification_token: payload }
+    })
+}
+
 const deleteUser = async (payload) => {
     return User.destroy({ where: { email: payload.email } })
 }
@@ -34,5 +40,6 @@ module.exports = {
     createUser,
     findUserByEmail,
     findUserById,
+    findUserByToken,
     deleteUser
 }
