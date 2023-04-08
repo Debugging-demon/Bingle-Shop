@@ -1,21 +1,19 @@
 version: '3.8'
 
 services:
-  bingle-shop:
+  automation_testing:
     build: 
       dockerfile: Dockerfile
       context: .
+    tty: true
     ports:
-      - 5261:5252
+      - 9182:5151
     depends_on:
       - automation_db
       - automation_testing_migration
-      - test_db
-      - test_migration
     env_file:
-      - .env.production
-      - .env.test
-    command: sh -c "npm run start"
+      - .env.development
+    command: sh -c "npm run start:dev"
     volumes:
       - type: volume
         source: automation_module_volume
@@ -31,44 +29,17 @@ services:
     depends_on:
       - automation_db
     env_file:
-      - .env.production
-    command: sh -c "npm run db:migrate:prod && npm run db:seed:prod"
-    # command: sh -c "npm run db:migrate:development"
-    restart: on-failure
-
-  test_migration:
-    build: 
-      dockerfile: Dockerfile
-      context: .
-    depends_on:
-      - test_db
-    env_file:
-      - .env.test
-    command: sh -c "npm run db:migrate:test"
-    # command: sh -c "npm run db:migrate:development"
+      - .env.development
+    command: sh -c "npm run db:migrate:development && npm run db:seed:development"
     restart: on-failure
 
   automation_db:
     image: postgres:14
     ports:
-      - 5430:5432
+      - 5437:5432
     environment:
-      - POSTGRES_PASSWORD=1234
-      - POSTGRES_DB=DB_NAME=BingleShop
-
-  test_db:
-    image: postgres:14
-    ports:
-      - 5430:5432
-    environment:
-      - POSTGRES_PASSWORD=1234
-      - POSTGRES_DB=DB_NAME=BingleShop-test
-  
-  
-  
-
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=automation
 
 volumes:
   automation_module_volume:
-
-  #automation_db
