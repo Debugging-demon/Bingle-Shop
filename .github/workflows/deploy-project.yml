@@ -1,0 +1,30 @@
+name: Deploy Automation Testing Debugging Demon Project
+
+on:
+  push:
+    branches:
+      - "dev-deploy"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Deploy to vps
+        uses: appleboy/ssh-action@master
+        with:
+          host: 191.96.57.57
+          username: root
+          password: Kin@n-g1nGD3mon
+          script: |
+            cd /root/Bingle-Shop
+            git pull origin dev-deploy
+            npm install
+            npm run db:migrate:development
+            npm run db:seed:development
+            npm run start
+            npm run test
+            
