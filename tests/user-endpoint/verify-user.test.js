@@ -27,33 +27,29 @@ describe('endpoint: get /v1/api/verify-email', () => {
                 is_verified: false,
                 role: 'user'
             })
-
-            console.log(createUser)
        })
 
        afterEach(async () => {
-            User.destroy({where: { email: 'sitijogja@gmail.com'}})
+            await User.destroy({where: { email: 'sitijogja@gmail.com'}})
        })
 
 
         it('return verify email success', async () => {
+            const findUser = await User.findOne({where: { email: 'sitijogja@gmail.com'}})
+
+            token = findUser.verification_token
 
             const resp = await request(app)
-                .post('/v1/api/register/user')
+                .get(`/v1/api/verify-email?token=${token}`)
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
-                .send({
-                    fullname: 'Joko Integration',
-                    address: 'pacitan',
-                    phone: '084432145166',
-                    email: 'joko12.com',
-                    password: 'jokoIntegration'
-                })
+                .send()
                 
+                console.log('respon body',resp.body)
                 expect(resp.body).toHaveProperty('message')
-                expect(resp.body.message).toBe('Invalid email/phone number or password')
-                expect(resp.body.type).toBe('invalid_request_error')
-                expect(resp.status).toBe(400)
+                expect(resp.body.message).toBe('Token updated successfuly')
+                expect(resp.body.type).toBe('success')
+                expect(resp.status).toBe(200)
         })
         
     })

@@ -106,13 +106,15 @@ class userController {
 
             if (findUser.is_verified) { return responseHendler.badRequest(res, message('id').userIsVerified) }
 
-            if (findUser.is_verified !== token) { return responseHendler.badRequest(res, message('token').incompleteKeyOrValue) }
+            if (findUser.verification_token !== token) { return responseHendler.badRequest(res, message('token').incompleteKeyOrValue) }
 
             findUser.is_verified = true;
             findUser.verification_token = null;
             await findUser.save();
             return responseHendler.ok(res, message('Token').updated)
+
         } catch (error) {
+            console.log(error)
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
         }
