@@ -19,6 +19,6 @@ router.post('/api/login', usercontroller.loginUser)
 //router cek profile
 router.get('/api/profile', tokenjwt.verifyToken, usercontroller.profileUser) //
 
-router.get("/verify-email/", usercontroller.verificationUser)
+router.get("/api/verify-email", usercontroller.verificationUser)
 
 module.exports = router

@@ -5,7 +5,6 @@ const itemDecoratorArray = async (item, pagination) => {
     return {
       id_item: data.id,
       name_item: data.name_item,
-      Penjual: data.user.fullname,
       category_id: data.category_id,
       category_name: data.category.category_name,
       description: data.item_description,

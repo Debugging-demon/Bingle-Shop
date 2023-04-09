@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../../app')
 const sequelize = require('../../db/config/config')
 const { Item } = require('../../db/models')
+const bcrypt = require('bcrypt')
 
 
 describe('endpoint: get v1/api/item', () => {
@@ -44,6 +45,7 @@ describe('endpoint: get v1/api/item', () => {
     describe('should be successful', () => {
 
         beforeEach(async () => {
+
             await Item.create({
                 name_item: "sapu lidi1",
                 category_id: 1,
@@ -53,8 +55,7 @@ describe('endpoint: get v1/api/item', () => {
         })
 
         afterEach(async () => {
-            const findItem = await Item.findOne({ where: {name_item: "sapu lidi1"} })
-            await Item.destroy({ where: {id: findItem.id}})
+            await Item.destroy({ where: {name_item: "sapu lidi1"}})
         })
         it('should be return success get all item', async () => {
         

@@ -20,14 +20,17 @@ describe('router: /v1/api/login', () => {
     describe('should be successful', () => {
 
         beforeEach( async () => {
-            await User.create({
+            const createUser = await User.create({
                 fullname: 'Joko Integration',
                 address: 'pacitan',
                 phone: '084432145166',
                 email: 'joko123@gmail.com',
                 password: bcrypt.hashSync('jokoIntegration', 8),
+                is_verified: true,
                 role: 'user'
             })
+
+            console.log(createUser)
         })
         
         afterEach( async() => {

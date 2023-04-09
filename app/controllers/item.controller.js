@@ -34,7 +34,6 @@ class itemController {
 
             const pagin = pagination(page, limit)
 
-            console.log(req.query);
             const getAllItem = await itemQueries.findAllItem(pagin.limitInt, pagin.offset)
             if (getAllItem.length == 0) { return responseHendler.notFound(res, message('item').notFoundResource) }
 
@@ -49,6 +48,7 @@ class itemController {
         }
 
         catch (err) {
+            console.log(err)
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
         }
@@ -104,8 +104,9 @@ class itemController {
             const auth = req.userId
 
             const findItem = await itemQueries.findByUserId(payload, auth)
-            if (!findItem) { return responseHendler.notFound(res, message('item').notFoundResource) }
 
+            if (!findItem) { return responseHendler.notFound(res, message('item').notFoundResource) }
+            
             const updateItem = await itemQueries.updateItem(findItem, req.body)
             if (!updateItem) { return responseHendler.badRequest(res, message().serverError) }
 

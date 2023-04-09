@@ -28,14 +28,14 @@ describe('endpoint: update v1/api/item/:id', () => {
                 password: bcrypt.hashSync('asepvsAb1', 8),
                 role: 'seller'
             })
-
-            await Item.create({
+            const createItem = await Item.create({
                 user_id: createUser.id,
-                name_item: "tisu paseo sedang",
+                name_item: "tisu paseo sedang1",
                 category_id: 1,
                 price: 3500,
                 quantity: 20,
             })
+
         })
 
         afterEach(async () => {
@@ -55,7 +55,8 @@ describe('endpoint: update v1/api/item/:id', () => {
             }
             const token = await generateToken(payload)
 
-            const findItem = await Item.findOne({ where: {name_item: "tisu paseo sedang"} })
+            const findItem = await Item.findOne({ where: {name_item: "tisu paseo sedang1"} })
+
             const pathParams = findItem.id
 
             const res = await request(app)

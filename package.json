@@ -31,7 +31,8 @@
     "db:migrate:prod": "cross-env NODE_ENV=production sequelize db:migrate",
     "db:seed:prod": "cross-env NODE_ENV=production sequelize db:seed:all",
     "db:create:test": "cross-env NODE_ENV=test sequelize db:create",
-    "db:migrate:test": "cross-env NODE_ENV=test sequelize db:migrate"
+    "db:migrate:test": "cross-env NODE_ENV=test sequelize db:migrate",
+    "db:seed:test": "cross-env NODE_ENV=test sequelize db:seed:all"
   },
   "name": "challenge-binar",
   "version": "1.0.0",
