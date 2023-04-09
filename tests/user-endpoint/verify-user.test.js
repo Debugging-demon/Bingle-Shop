@@ -53,4 +53,62 @@ describe('endpoint: get /v1/api/verify-email', () => {
         })
         
     })
+
+    describe('should error', () => {
+        describe('when user is verified', () => {
+            beforeEach(async () => {
+                 const createUser = await User.create({
+                     fullname: 'siti maimunah',
+                     address: 'jpogja',
+                     phone: '084432145166',
+                     email: 'sitijogja1@gmail.com',
+                     password: bcrypt.hashSync('jokoIntegration', 8),
+                     is_verified: true,
+                     role: 'user'
+                 })
+            })
+     
+            afterEach(async () => {
+                 await User.destroy({where: { email: 'sitijogja1@gmail.com'}})
+            })
+     
+     
+             it('return user is already verified', async () => {
+                 const findUser = await User.findOne({where: { email: 'sitijogja1@gmail.com'}})
+     
+                 token = findUser.verification_token
+     
+                 const resp = await request(app)
+                     .get(`/v1/api/verify-email?token=${token}`)
+                     .set('Content-Type', 'application/json')
+                     .set('Accept', 'application/json')
+                     .send()
+
+                     expect(resp.body.error).toBe(true)
+                     expect(resp.body.message).toBe('User is already verified')
+                     expect(resp.body.type).toBe('invalid_request_error')
+                     expect(resp.status).toBe(400)
+             })
+             
+         })
+
+        describe('when token null', () => {
+    
+            it('return verify email success', async () => {
+                token = null
+    
+                const resp = await request(app)
+                    .get(`/v1/api/verify-email?token=${token}`)
+                    .set('Content-Type', 'application/json')
+                    .set('Accept', 'application/json')
+                    .send()
+                    
+                    expect(resp.body.error).toBe(true)
+                    expect(resp.body.message).toBe('invalid input syntax for type uuid: "null"')
+                    expect(resp.body.type).toBe('api_error')
+                    expect(resp.status).toBe(500)
+            })
+            
+        })
+    })
 })

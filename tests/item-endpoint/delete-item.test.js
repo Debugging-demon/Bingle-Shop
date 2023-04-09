@@ -105,7 +105,7 @@ describe('endpoint: delete v1/api/item/:id', () => {
 
             await User.destroy({where: { email: 'asep@gmail.com'}})
             await User.destroy({where: { email: 'andika1@gmail.com'}})
-            await Item.destroy({where: { name_item: "tisu paseo"}})
+            await Item.destroy({where: { name_item: "tisu Sehat"}})
 
         })
         it('when not owner of items to delete', async () => {

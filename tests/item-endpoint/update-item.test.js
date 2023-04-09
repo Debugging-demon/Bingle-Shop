@@ -100,7 +100,7 @@ describe('endpoint: update v1/api/item/:id', () => {
 
             await Item.create({
                 user_id: createSeller.id,
-                name_item: "tisu Sehat",
+                name_item: "tisu Sehat saja",
                 category_id: 1,
                 price: 3500,
                 quantity: 20,
@@ -111,7 +111,7 @@ describe('endpoint: update v1/api/item/:id', () => {
 
             await User.destroy({where: { email: 'asep@gmail.com'}})
             await User.destroy({where: { email: 'andika@gmail.com'}})
-            await Item.destroy({where: { name_item: "tisu paseo"}})
+            await Item.destroy({where: { name_item: "tisu Sehat saja"}})
 
         })
         it('when not owner of items to update', async () => {
@@ -123,7 +123,7 @@ describe('endpoint: update v1/api/item/:id', () => {
             }
             const token = await generateToken(payload)
 
-            const findItem = await Item.findOne({ where: {name_item: "tisu Sehat"} })
+            const findItem = await Item.findOne({ where: {name_item: "tisu Sehat saja"} })
             const pathParams = findItem.id
 
             const res = await request(app)

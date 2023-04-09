@@ -115,5 +115,22 @@ describe('router: /v1/api/login', () => {
             expect(resp.status).toBe(404)
             })
         })
+
+        // describe('req body is null', () => {
+
+        //     it('must wrong', async () => {
+        //         const resp = await request(app)
+        //         .post('/v1/api/login')
+        //         .set('Content-Type', 'application/json')
+        //         .set('Accept', 'application/json')
+        //         .send(null)
+            
+        //     console.log(resp.body)
+        //     expect(resp.body).toHaveProperty('message')
+        //     expect(resp.body.message).toBe('wrong password')
+        //     expect(resp.body.data).not.toHaveProperty('token')
+        //     expect(resp.status).toBe(404)
+        //     })
+        // })
     })
 })
