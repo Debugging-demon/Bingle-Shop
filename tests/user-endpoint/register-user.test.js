@@ -20,7 +20,7 @@ describe('router: /v1/api/register/user', () => {
 
         afterEach( async() => {
             await User.destroy({
-                where: { email: "yasinal2@gmail.com"}
+                where: { email: "yasinal3@gmail.com"}
             })
         })
 
@@ -36,7 +36,7 @@ describe('router: /v1/api/register/user', () => {
                     fullname: "yasin alqurni",
                     address: "gg. masjid alfatah",
                     phone: "082239236521",
-                    email: "yasinal2@gmail.com",
+                    email: "yasinal3@gmail.com",
                     password: "passwordlah1"
                 })
 

@@ -7,7 +7,7 @@ const { User } = require('../../db/models')
 const bcrypt = require('bcrypt')
 
 
-describe('router: /v1/api/register/user', () => {
+describe('router: /v1/api/register/admin', () => {
     beforeAll(async () => {
         await sequelize.authenticate()
     })
@@ -20,13 +20,13 @@ describe('router: /v1/api/register/user', () => {
 
         afterEach( async() => {
             await User.destroy({
-                where: { email: "yasinal@gmail.com"}
+                where: { email: "yasinal2@gmail.com"}
             })
         })
 
         
 
-        it('should return success register user', async () => {
+        it('should return success register admin', async () => {
 
             const resp = await request(app)
                 .post('/v1/api/register/admin')
@@ -36,7 +36,7 @@ describe('router: /v1/api/register/user', () => {
                     fullname: "yasin alqurni",
                     address: "gg. masjid alfatah",
                     phone: "082239236521",
-                    email: "yasinal@gmail.com",
+                    email: "yasinal2@gmail.com",
                     password: "passwordlah1"
                 })
 
