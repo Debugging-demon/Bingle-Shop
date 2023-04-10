@@ -139,6 +139,7 @@ class orderController {
         }
 
         catch (err) {
+            console.log(err)
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
         }

@@ -30,7 +30,7 @@ describe('endpoint: update v1/api/item/:id', () => {
             })
             const createItem = await Item.create({
                 user_id: createUser.id,
-                name_item: "tisu paseo sedang13",
+                name_item: "tisu paseo sedang134",
                 category_id: 1,
                 price: 3500,
                 quantity: 20,
@@ -55,7 +55,7 @@ describe('endpoint: update v1/api/item/:id', () => {
             }
             const token = await generateToken(payload)
 
-            const findItem = await Item.findOne({ where: {name_item: "tisu paseo sedang13"} })
+            const findItem = await Item.findOne({ where: {name_item: "tisu paseo sedang134"} })
 
             const pathParams = findItem.id
 
