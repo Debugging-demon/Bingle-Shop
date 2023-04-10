@@ -14,7 +14,7 @@ const transport = nodemailer.createTransport({
 
 async function sendVerificationEmail(newUser) {
     const token = newUser.verification_token;
-    const url = `http://${process.env.VPS_SERVER}:${process.env.PORT_SERVER}/v1/verify-email?token=${token}`;
+    const url = `http://${process.env.VPS_SERVER}:${process.env.PORT_SERVER}/v1/api/verify-email?token=${token}`;
     const mailOptions = {
         from: "'Debugging Demon'<no-reply@gmail.com>",
         to: newUser.email,
