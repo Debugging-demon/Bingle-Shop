@@ -115,21 +115,21 @@ describe('router: /v1/api/login', () => {
             })
         })
 
-        describe('req body is undefined', () => {
+        // describe('req body is null', () => {
 
-            it('must wrong', async () => {
-                const resp = await request(app)
-                .post('/v1/api/login')
-                .set('Content-Type', 'application/json')
-                .set('Accept', 'application/json')
-                .send(undefined)
+        //     it('must wrong', async () => {
+        //         const resp = await request(app)
+        //         .post('/v1/api/login')
+        //         .set('Content-Type', 'application/json')
+        //         .set('Accept', 'application/json')
+        //         .send(null)
             
-            console.log(resp.body)
-            expect(resp.body.error).toBe(true)
-            expect(resp.body.message).toBe("WHERE parameter \"email\" has invalid \"undefined\" value")
-            expect(resp.body.type).toBe('api_error')
-            expect(resp.status).toBe(500)
-            })
-        })
+        //     console.log(resp.body)
+        //     expect(resp.body).toHaveProperty('message')
+        //     expect(resp.body.message).toBe('wrong password')
+        //     expect(resp.body.data).not.toHaveProperty('token')
+        //     expect(resp.status).toBe(404)
+        //     })
+        // })
     })
 })

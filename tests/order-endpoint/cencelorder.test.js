@@ -10,84 +10,74 @@ const generateToken  = require('../../lib/jwt')
 describe('this test for all endpoint of order success case', () => {
     beforeAll(async () => {
         await sequelize.authenticate()
-        
+        //create user
+        const createUser = await User.create({
+            fullname: 'Asep Surasep',
+            address: 'Bandung',
+            phone: '084432145166',
+            email: 'asep3@gmail.com',
+            password: bcrypt.hashSync('asepvsAb1', 8),
+            role: 'user'
+        })
+        //create seller
+        const createSeller = await User.create({
+            fullname: 'Toko Baju Anak',
+            address: 'Bandung',
+            phone: '084432145166',
+            email: 'toko@gmail.com',
+            password: bcrypt.hashSync('asepvsAb1', 8),
+            role: 'seller'
+        })
+        //create item
+        const createItem = await Item.create({
+            name_item: "Baju kemeja Koko",
+            user_id: createSeller.id,
+            category_id: 1,
+            price: 125000,
+            quantity: 20,
+        })
+        //create cart
+        const createCart = await Cart.create({
+            user_id: createUser.id,
+            status_cart: 'process'
+        })
+        //create item_cart
+        await Item_cart.create({
+            item_id: createItem.id,
+            cart_id: createCart.id,
+            quantity_order: 2,
+            total_price: 300000
+        })
+
+        await Order.create({
+            user_id: createUser.id,
+            cart_id: createCart.id,
+            status_order: 'pending',
+            total_price: 300000
+        })
     })
         
     afterAll(async () => {
-        
+        //delete user
+        await User.destroy({where: {email: 'asep3@gmail.com'}})
+        //delete seller
+        await User.destroy({where: {email: 'toko@gmail.com'}})
+        //delete item
+        await Item.destroy({where: {name_item: "Baju kemeja Koko"}})
+        //delete cart
+        await Cart.destroy({where: {status_cart: 'pending'}})
+        //delete item_cart
+        await Item_cart.destroy({where: {total_price: 300000}})
 
         await sequelize.close()
     })
 
     describe('for cancel order', () => {
 
-        afterEach(async() => {
-            //create user
-            const createUser = await User.create({
-                fullname: 'Asep Surasep',
-                address: 'Bandung',
-                phone: '084432145166',
-                email: 'asep322@gmail.com',
-                password: bcrypt.hashSync('asepvsAb1', 8),
-                role: 'user'
-            })
-            console.log(createUser)
-            //create seller
-            const createSeller = await User.create({
-                fullname: 'Toko Baju Anak',
-                address: 'Bandung',
-                phone: '084432145166',
-                email: 'toko@gmail.com',
-                password: bcrypt.hashSync('asepvsAb1', 8),
-                role: 'seller'
-            })
-            //create item
-            const createItem = await Item.create({
-                name_item: "Baju kemeja Koko1",
-                user_id: createSeller.id,
-                category_id: 1,
-                price: 125000,
-                quantity: 20,
-            })
-            //create cart
-            const createCart = await Cart.create({
-                user_id: createUser.id,
-                status_cart: 'process'
-            })
-            //create item_cart
-            await Item_cart.create({
-                item_id: createItem.id,
-                cart_id: createCart.id,
-                quantity_order: 2,
-                total_price: 300000
-            })
-
-            await Order.create({
-                user_id: createUser.id,
-                cart_id: createCart.id,
-                status_order: 'pending',
-                total_price: 300000
-            })
-        })
-
-        afterEach( async () => {
-            //delete user
-            await User.destroy({where: {email: 'asep322@gmail.com'}})
-            //delete seller
-            await User.destroy({where: {email: 'toko@gmail.com'}})
-            //delete item
-            await Item.destroy({where: {name_item: "Baju kemeja Koko"}})
-            //delete cart
-            await Cart.destroy({where: {status_cart: 'pending'}})
-            //delete item_cart
-            await Item_cart.destroy({where: {total_price: 300000}})
-        })
-
         it('should success', async () => {
             
-            const findUser = await User.findOne({where: { email: 'asep322@gmail.com' }})
-            
-            console.log(findUser)
+            const findUser = await User.findOne({where: { email: 'asep3@gmail.com' }})
+    
             const payload = {
                 id: findUser.id,
                 role: findUser.role

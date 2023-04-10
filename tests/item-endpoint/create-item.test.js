@@ -83,6 +83,8 @@ describe('endpoint: post v1/api/item', () => {
                     role: 'user'
 
                 })
+
+
             })
 
             afterEach( async() => {
@@ -121,52 +123,5 @@ describe('endpoint: post v1/api/item', () => {
                 expect(res.status).toBe(401)
             })
         })
-
-        // describe('if req.body undefined', () => {
-        //     beforeEach( async () => {
-        //         await User.create({
-        //             fullname: 'Joko Integration',
-        //             address: 'pacitan',
-        //             phone: '084432145166',
-        //             email: 'joko3211@gmail.com',
-        //             password: bcrypt.hashSync('jokoIntegration', 8),
-        //             role: 'seller'
-
-        //         })
-        //     })
-
-        //     afterEach( async() => {
-        //         const findUser = await User.findOne({
-        //             where: { email: 'joko3211@gmail.com' }
-        //         })
-        //         await User.destroy({
-        //             where: { id: findUser.id}
-        //         })
-
-                
-        //     })
-
-        //     it('should be return failed to authorize', async () => {
-        //         const findUser = await User.findOne({where: { email: 'joko3211@gmail.com' }})
-
-        //         const payload = {
-        //             id: findUser.id,
-        //             role: findUser.role
-        //         }
-        //         const token = await generateToken(payload)
-
-        //         const res = await request(app)
-        //             .post('/v1/api/item')
-        //             .set('Content-Type', 'application/json')
-        //             .set('Accept', 'application/json')
-        //             .set('authorization', token)
-        //             .send(null)
-
-        //         console.log('res create item 500', res.body)
-        //         expect(res.body).toHaveProperty('message')
-        //         expect(res.body.type).toBe(`authentication_error`)
-        //         expect(res.status).toBe(401)
-        //     })
-        // })
     })
 })
