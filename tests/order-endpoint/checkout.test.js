@@ -58,7 +58,7 @@ describe('this test for all endpoint of order success case', () => {
         //delete item
         await Item.destroy({where: {name_item: "Baju kemeja Koko"}})
         //delete cart
-        await Cart.destroy({where: {status_cart: 'pending'}})
+        await Cart.destroy({where: {status_cart: 'success'}})
         //delete item_cart
         await Item_cart.destroy({where: {total_price: 300000}})
 

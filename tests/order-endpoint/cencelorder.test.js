@@ -69,6 +69,8 @@ describe('this test for all endpoint of order success case', () => {
         //delete item_cart
         await Item_cart.destroy({where: {total_price: 300000}})
 
+        await Order.destroy({where: {status_order: 'cancel'}})
+
         await sequelize.close()
     })
 

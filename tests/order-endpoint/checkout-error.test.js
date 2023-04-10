@@ -23,7 +23,7 @@ describe('return error checkout endpoint', () => {
                 fullname: 'Asep Surasep',
                 address: 'Bandung',
                 phone: '084432145166',
-                email: 'asep5@gmail.com',
+                email: 'asep8@gmail.com',
                 password: bcrypt.hashSync('asepvsAb1', 8),
                 role: 'user'
             })
@@ -32,7 +32,7 @@ describe('return error checkout endpoint', () => {
                 fullname: 'Toko Baju Anak',
                 address: 'Bandung',
                 phone: '084432145166',
-                email: 'toko1@gmail.com',
+                email: 'toko2@gmail.com',
                 password: bcrypt.hashSync('asepvsAb1', 8),
                 role: 'seller'
             })
@@ -60,20 +60,20 @@ describe('return error checkout endpoint', () => {
 
         afterEach(async () => {
              //delete user
-        await User.destroy({where: {email: 'asep5@gmail.com'}})
+        await User.destroy({where: {email: 'asep8@gmail.com'}})
         //delete seller
-        await User.destroy({where: {email: 'toko1gmail.com'}})
+        await User.destroy({where: {email: 'toko2@gmail.com'}})
         //delete item
         await Item.destroy({where: {name_item: "Baju kemeja Koko kecil"}})
         //delete cart
-        await Cart.destroy({where: {status_cart: 'pending'}})
+        await Cart.destroy({where: {status_cart: 'success'}})
         //delete item_cart
         await Item_cart.destroy({where: {total_price: 300000}})
         })
 
         it('should error', async () => {
             
-            const findUser = await User.findOne({where: { email: 'asep5@gmail.com' }})
+            const findUser = await User.findOne({where: { email: 'asep8@gmail.com' }})
     
             const payload = {
                 id: findUser.id,
@@ -87,7 +87,7 @@ describe('return error checkout endpoint', () => {
                 .set('Accept', 'application/json')
                 .set('authorization', token)
 
-                // console.log('response stock limit order:', res.body)
+                console.log('response stock limit order:', res.body)
                 expect(res.body.error).toBe(true)
                 expect(res.body.message).toBe('stock limit')
                 expect(res.status).toBe(400)
