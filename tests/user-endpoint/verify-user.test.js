@@ -45,7 +45,6 @@ describe('endpoint: get /v1/api/verify-email', () => {
                 .set('Accept', 'application/json')
                 .send()
                 
-                console.log('respon body',resp.body)
                 expect(resp.body).toHaveProperty('message')
                 expect(resp.body.message).toBe('Token updated successfuly')
                 expect(resp.body.type).toBe('success')

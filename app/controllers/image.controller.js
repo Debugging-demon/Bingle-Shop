@@ -1,6 +1,6 @@
 const fs = require('fs')
 const {uploadFile, __basedir, deleteImageCloudinary } = require('../services/upload')
-const { imageQueries } = require('../queries')
+const { imageQueries, itemQueries } = require('../queries')
 const message = require('../../response-helpers/messages').MESSAGE
 const responseHendler = require('../../response-helpers/error-helper')
 
@@ -10,19 +10,22 @@ class imageController {
      async uploadImage (req, res) {
         try {
 
-            const id = req.params.id
-            
+            const id = req.params
+            const auth = req.userId
+            //findItem
+            const findItem = await itemQueries.findByUserId(id, auth)
+            if (!findItem) { return responseHendler.notFound(res, message('item').notFoundResource)}
             //deploy storage dicloudinary
             const uploadImage = await uploadFile(req, res)
-            console.log(uploadImage)
+        
 
             if(req.files === undefined) { return responseHendler.badRequest(res, message('images').incompleteKeyOrValue)}
 
             //use to bulk upload
-            console.log(req.files)
+            console.log('req.files:', req.files)
             let images = req.files.map((item) => {
                 const image = {}
-                image.item_id = id
+                image.item_id = findItem.id
                 image.public_id = item.filename,
                 image.url = item.path
                 

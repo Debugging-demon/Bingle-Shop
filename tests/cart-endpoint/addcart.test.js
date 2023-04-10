@@ -122,4 +122,50 @@ describe('endpoint: /v1/api/cart/:id', () => {
                 expect(res.status).toBe(400)
         })
     })
+
+    describe('this error', () => {
+
+        beforeEach(async() => {
+            await User.create({
+                fullname: 'Mahalini',
+                address: 'Bandung',
+                phone: '084432145166',
+                email: 'mahalini1@gmail.com',
+                password: bcrypt.hashSync('asepvsAb1', 8),
+                role: 'user'
+            })
+
+        })
+
+        afterEach(async() => {
+            await User.destroy({where: { email: 'mahalini1@gmail.com'}})
+        })
+
+        it('should error api', async () => {
+            
+            const findUser = await User.findOne({where: { email: 'mahalini1@gmail.com' }})
+    
+            const payload = {
+                id: findUser.id,
+                role: findUser.role
+            }
+            const token = await generateToken(payload)
+
+            const pathParams = null
+
+            const res = await request(app)
+                .post(`/v1/api/cart/${pathParams}`)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .set('authorization', token)
+                .send({
+                    quantity_order: 21
+                })
+                
+                expect(res.body.error).toBe(true)
+                expect(res.body.message).toBe('invalid input syntax for type integer: "null"')
+                expect(res.body.type).toBe('api_error')
+                expect(res.status).toBe(500)
+        })
+    })
 })

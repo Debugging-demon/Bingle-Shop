@@ -128,7 +128,7 @@ class itemController {
 
             const auth = req.userId
             const findAllItem = await itemQueries.findAllItemById(auth, pagin.limitInt, pagin.offset)
-            if (!findAllItem) { return responseHendler.notFound(res, message('item').notFoundResource) }
+            if (findAllItem.length == 0) { return responseHendler.notFound(res, message('item').notFoundResource) }
 
             const data = await itemDecorator.itemDecoratorArray(findAllItem)
 
@@ -136,6 +136,7 @@ class itemController {
         }
 
         catch (err) {
+            console.log(err)
             const key = err.message
             return responseHendler.internalError(res, message(key).errorMessage)
         }

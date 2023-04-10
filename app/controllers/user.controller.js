@@ -112,7 +112,6 @@ class userController {
             return responseHendler.ok(res, message('Token').updated)
 
         } catch (error) {
-            console.log(error)
             const key = error.message
             return responseHendler.internalError(res, message(key).errorMessage)
         }

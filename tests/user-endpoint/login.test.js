@@ -30,7 +30,6 @@ describe('router: /v1/api/login', () => {
                 role: 'user'
             })
 
-            console.log(createUser)
         })
         
         afterEach( async() => {
