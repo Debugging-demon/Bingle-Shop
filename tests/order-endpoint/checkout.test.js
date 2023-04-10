@@ -65,9 +65,9 @@ describe('this test for all endpoint of order success case', () => {
         await sequelize.close()
     })
 
-    describe('for checkout', () => {
+    describe('should success', () => {
 
-        it('should success', async () => {
+        it('checkout', async () => {
             
             const findUser = await User.findOne({where: { email: 'asep2@gmail.com' }})
     
@@ -82,16 +82,14 @@ describe('this test for all endpoint of order success case', () => {
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
                 .set('authorization', token)
-        
+
+                console.log('checkout',res.body)
                 expect(res.body.error).toBe(false)
                 expect(res.body.message).toBe('checkout success')
                 expect(res.status).toBe(200)
         })
-    })
 
-    describe('for confirm payment', () => {
-
-        it('should success', async () => {
+        it('sconfirm payment', async () => {
             
             const findUser = await User.findOne({where: { email: 'asep2@gmail.com' }})
     
@@ -101,12 +99,14 @@ describe('this test for all endpoint of order success case', () => {
             }
             const token = await generateToken(payload)
 
+
             const res = await request(app)
                 .patch(`/v1/api/order`)
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
                 .set('authorization', token)
-        
+            
+                console.log('confirm payment',res.body)
                 expect(res.body.error).toBe(false)
                 expect(res.body.message).toBe('confirm payment success')
                 expect(res.status).toBe(200)
