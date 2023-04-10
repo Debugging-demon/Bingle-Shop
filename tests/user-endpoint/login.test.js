@@ -20,14 +20,16 @@ describe('router: /v1/api/login', () => {
     describe('should be successful', () => {
 
         beforeEach( async () => {
-            await User.create({
+            const createUser = await User.create({
                 fullname: 'Joko Integration',
                 address: 'pacitan',
                 phone: '084432145166',
                 email: 'joko123@gmail.com',
                 password: bcrypt.hashSync('jokoIntegration', 8),
+                is_verified: true,
                 role: 'user'
             })
+
         })
         
         afterEach( async() => {
@@ -112,5 +114,22 @@ describe('router: /v1/api/login', () => {
             expect(resp.status).toBe(404)
             })
         })
+
+        // describe('req body is null', () => {
+
+        //     it('must wrong', async () => {
+        //         const resp = await request(app)
+        //         .post('/v1/api/login')
+        //         .set('Content-Type', 'application/json')
+        //         .set('Accept', 'application/json')
+        //         .send(null)
+            
+        //     console.log(resp.body)
+        //     expect(resp.body).toHaveProperty('message')
+        //     expect(resp.body.message).toBe('wrong password')
+        //     expect(resp.body.data).not.toHaveProperty('token')
+        //     expect(resp.status).toBe(404)
+        //     })
+        // })
     })
 })

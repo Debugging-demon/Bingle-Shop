@@ -7,7 +7,7 @@ const { User } = require('../../db/models')
 const bcrypt = require('bcrypt')
 
 
-describe('router: /v1/api/register/user', () => {
+describe('router: /v1/api/register/seller', () => {
     beforeAll(async () => {
         await sequelize.authenticate()
     })
@@ -20,23 +20,23 @@ describe('router: /v1/api/register/user', () => {
 
         afterEach( async() => {
             await User.destroy({
-                where: { email: "yasinal@gmail.com"}
+                where: { email: "yasinal1@gmail.com"}
             })
         })
 
         
 
-        it('should return success register user', async () => {
+        it('should return success register seller', async () => {
 
             const resp = await request(app)
-                .post('/v1/api/register/user')
+                .post('/v1/api/register/seller')
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
                 .send({
                     fullname: "yasin alqurni",
                     address: "gg. masjid alfatah",
                     phone: "082239236521",
-                    email: "yasinal@gmail.com",
+                    email: "yasinal1@gmail.com",
                     password: "passwordlah1"
                 })
 
@@ -71,7 +71,7 @@ describe('router: /v1/api/register/user', () => {
 
             it('cannot register because data duplicates', async () => {
                 const resp = await request(app)
-                .post('/v1/api/register/user')
+                .post('/v1/api/register/seller')
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
                 .send({
@@ -91,7 +91,7 @@ describe('router: /v1/api/register/user', () => {
         describe('email & phone format is wrong', () => {
             it('cannot register because email format is wrong', async () => {
                 const resp = await request(app)
-                .post('/v1/api/register/user')
+                .post('/v1/api/register/seller')
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
                 .send({
@@ -110,7 +110,7 @@ describe('router: /v1/api/register/user', () => {
 
             it('cannot register because phone format is wrong', async () => {
                 const resp = await request(app)
-                .post('/v1/api/register/user')
+                .post('/v1/api/register/seller')
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
                 .send({
@@ -130,7 +130,7 @@ describe('router: /v1/api/register/user', () => {
         describe('internal server error', () => {
             it('must be internal server error', async () => {
                 const resp = await request(app)
-                .post('/v1/api/register/user')
+                .post('/v1/api/register/seller')
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
                 .send({

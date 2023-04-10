@@ -3,7 +3,7 @@ info:
   title: Bingle-Shop
   version: 1.0.0
 servers:
-  - url: http://localhost:5151
+  - url: http://191.96.57.57:9182
 tags:
   - name: EndPoin User
   - name: EndPoin Item
@@ -24,11 +24,11 @@ paths:
               example:
                 fullname: Lala1
                 address: gg. masjid alfatah
-                phone: "082239236521"
+                phone: '082239236521'
                 email: lala1@gmail.com
                 password: makannasi
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -45,11 +45,11 @@ paths:
               example:
                 fullname: yasin2
                 address: klaten
-                phone: "082239236521"
+                phone: '082239236521'
                 email: yasin2@gmail.com
                 password: makannasi
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -66,11 +66,11 @@ paths:
               example:
                 fullname: Ahmad Zaki
                 address: gg. masjid alfatah
-                phone: "082239236521"
+                phone: '082239236521'
                 email: zaki@gmail.com
                 password: zakiahmad
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -85,10 +85,10 @@ paths:
             schema:
               type: object
               example:
-                email: yasin2@gmail.com
+                email: yasin1@gmail.com
                 password: makannasi
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -105,7 +105,7 @@ paths:
           example: >-
             eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzA4LCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgwNjc4MjU5LCJleHAiOjE2ODA2ODE4NTl9.rZp74PIQvYwe3VBYHJQXgUj8_0PZIKpZVVGwKa4ASX4
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -121,7 +121,7 @@ paths:
               type: object
               example:
                 name_item: mie sedap original
-                category_id: "1"
+                category_id: '1'
                 price: 3500
                 quantity: 20
       parameters:
@@ -132,7 +132,7 @@ paths:
           example: >-
             eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzA4LCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgwNjc4NTQyLCJleHAiOjE2ODA2ODIxNDJ9.jH0a1ApUZxHxiDt9n-khz_LZTcBE1g1PzDA3KlCUKMA
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -145,14 +145,14 @@ paths:
           in: query
           schema:
             type: integer
-          example: "4"
+          example: '4'
         - name: limit
           in: query
           schema:
             type: integer
-          example: "5"
+          example: '5'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -167,9 +167,9 @@ paths:
           schema:
             type: integer
           required: true
-          example: "307"
+          example: '307'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -189,9 +189,9 @@ paths:
           schema:
             type: integer
           required: true
-          example: "686"
+          example: '686'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -218,9 +218,9 @@ paths:
           schema:
             type: integer
           required: true
-          example: "301"
+          example: '301'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -237,7 +237,7 @@ paths:
           example: >-
             eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzA4LCJyb2xlIjoic2VsbGVyIiwiaWF0IjoxNjgwNjgwMDMwLCJleHAiOjE2ODA2ODM2MzB9.b_2y2v2t956h02crizOIs0CjdL_9maul-PUDeZDyr7E
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -265,9 +265,9 @@ paths:
           schema:
             type: integer
           required: true
-          example: "688"
+          example: '688'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -284,7 +284,7 @@ paths:
           example: >-
             eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY2NSwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODA2Nzk0MTgsImV4cCI6MTY4MDY4MzAxOH0.KxqfTG-8svm_741nq6n89OjO0h2ilv1K5E-f0zAPVrY
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -303,7 +303,7 @@ paths:
           example: >-
             eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY2NSwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODA2Nzk0MTgsImV4cCI6MTY4MDY4MzAxOH0.KxqfTG-8svm_741nq6n89OjO0h2ilv1K5E-f0zAPVrY
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -321,7 +321,7 @@ paths:
           example: >-
             eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY2NSwicm9sZSI6InVzZXIiLCJpYXQiOjE2ODA2Nzk0MTgsImV4cCI6MTY4MDY4MzAxOH0.KxqfTG-8svm_741nq6n89OjO0h2ilv1K5E-f0zAPVrY
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -337,7 +337,7 @@ paths:
           example: >-
             eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InNlbGxlciIsImlhdCI6MTY3NTMzNzc0NiwiZXhwIjoxNjc1NDI0MTQ2fQ._vi7f4oC_lzE4XaKdSTK5m6LK9qQG6UMwbeQh15zMw4
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -367,9 +367,9 @@ paths:
           schema:
             type: integer
           required: true
-          example: "687"
+          example: '687'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
@@ -389,9 +389,9 @@ paths:
           schema:
             type: integer
           required: true
-          example: "1"
+          example: '1'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json: {}
