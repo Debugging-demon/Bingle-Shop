@@ -80,4 +80,46 @@ describe('router: /v1/api/profile', () => {
             })
         })
     })
+
+    // describe('should be error 500', () => {
+
+    //     beforeEach( async () => {
+    //         await User.create({
+    //             fullname: 'Andi safarudin',
+    //             address: 'pacitan',
+    //             phone: '084432145166',
+    //             email: 'andi@gmail.com',
+    //             password: bcrypt.hashSync('jokoIntegration', 8),
+    //             role: 'user'
+            
+    //         })
+    //     })
+
+    //     afterEach( async() => {
+    //         const findUser = await User.findOne({where: {email: 'andi@gmail.com'}})
+    //         await User.destroy({
+    //             where: {id : findUser.id}
+    //         })
+    //     })
+
+    //     describe('if token user_id crash', () => {
+    //         it('because the token user_id + 1', async () => {
+
+    //             const payload = {
+    //                 id: null,
+    //                 role: findUser.role
+    //             }
+    //             const token = await generateToken(payload)
+                
+    //             const resp = await request(app)
+    //                 .get('/v1/api/profile')
+    //                 .set('Content-Type', 'application/json')
+    //                 .set('Accept', 'application/json')
+    //                 .set('authorization', token )
+                
+    //                 console.log('response dari cek profile:',resp.body)
+    //             expect(resp.status).toBe(401)
+    //         })
+    //     })
+    // })
 })

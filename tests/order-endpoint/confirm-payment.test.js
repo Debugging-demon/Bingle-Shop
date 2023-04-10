@@ -7,26 +7,25 @@ const { Item, User, Cart, Item_cart, Order } = require('../../db/models')
 const bcrypt = require('bcrypt')
 const generateToken  = require('../../lib/jwt')
 
-describe('confirm payment', () => {
+describe('for confirm payment', () => {
     beforeAll(async () => {
         await sequelize.authenticate()
-       
+
     })
         
     afterAll(async () => {
-        
+
         await sequelize.close()
     })
 
-    describe('for checkout', () => {
-
+    describe('return success', () => {
         beforeEach( async () => {
-             //create user
+            //create user
         const createUser = await User.create({
             fullname: 'Asep Surasep',
             address: 'Bandung',
             phone: '084432145166',
-            email: 'asep21@gmail.com',
+            email: 'asep23@gmail.com',
             password: bcrypt.hashSync('asepvsAb1', 8),
             role: 'user'
         })
@@ -45,12 +44,12 @@ describe('confirm payment', () => {
             user_id: createSeller.id,
             category_id: 1,
             price: 125000,
-            quantity: 25,
+            quantity: 20,
         })
         //create cart
         const createCart = await Cart.create({
             user_id: createUser.id,
-            status_cart: 'pending'
+            status_cart: 'process'
         })
         //create item_cart
         await Item_cart.create({
@@ -60,18 +59,25 @@ describe('confirm payment', () => {
             total_price: 300000
         })
 
-       
+        await Order.create({
+            user_id: createUser.id,
+            cart_id: createCart.id,
+            status_order: 'pending',
+            total_price: 300000
+        })
+
+        
     })
 
         afterEach( async () => {
             //delete user
-        await User.destroy({where: {email: 'asep21@gmail.com'}})
+        await User.destroy({where: {email: 'asep23@gmail.com'}})
         //delete seller
         await User.destroy({where: {email: 'toko@gmail.com'}})
         //delete item
         await Item.destroy({where: {name_item: "Baju kemeja Koko"}})
         //delete cart
-        await Cart.destroy({where: {status_cart: 'process'}})
+        await Cart.destroy({where: {status_cart: 'pending'}})
         //delete item_cart
         await Item_cart.destroy({where: {total_price: 300000}})
 
@@ -79,8 +85,8 @@ describe('confirm payment', () => {
 
         it('should success', async () => {
             
-            const findUser = await User.findOne({where: { email: 'asep21@gmail.com' }})
-    
+            const findUser = await User.findOne({where: { email: 'asep23@gmail.com' }})
+
             const payload = {
                 id: findUser.id,
                 role: findUser.role
@@ -88,15 +94,16 @@ describe('confirm payment', () => {
             const token = await generateToken(payload)
 
             const res = await request(app)
-                .post(`/v1/api/order`)
+                .patch(`/v1/api/order`)
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
                 .set('authorization', token)
 
-                console.log('checkout:',res.body)
+                console.log('confirm', res.body)
                 expect(res.body.error).toBe(false)
-                expect(res.body.message).toBe('checkout success')
+                expect(res.body.message).toBe('confirm payment success')
                 expect(res.status).toBe(200)
         })
     })
+
 })
