@@ -54,16 +54,16 @@ docker-compose up
 | Ridho Ghiffary Muhammad | https://github.com/ridhoghiffary |
 | Yusron Abdullah | https://github.com/ridhoghiffary |
 
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/orgs/Debugging-demon/people"><img src="https://avatars.githubusercontent.com/u/125386377?s=200&v=4" width="100px;" alt=""/><br /><sub><b>Debugging-demon</b></sub></a></td>
-  </tr>
-</table>
+
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## License
-
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/orgs/Debugging-demon/people"><img src="https://avatars.githubusercontent.com/u/125386377?s=200&v=4" width="100px;" alt=""/><br /><sub><b>Debugging-demon</b></sub></a></td>
+  </tr>
+</table>
 Copyright (c) 2023 Debugging Demon (Backend Bootcamp Team at Binar Academy)
 All rights reserved.
